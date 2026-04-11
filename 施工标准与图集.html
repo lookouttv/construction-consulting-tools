@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>施工标准与图集</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            width: 100%;
+            max-width: 900px;
+        }
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 36px;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .card-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .card {
+            width: 350px;
+            height: 350px;
+            background: white;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .card-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .card-icon svg {
+            width: 40px;
+            height: 40px;
+            fill: white;
+        }
+        .card-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            padding: 0 20px;
+            line-height: 1.4;
+        }
+        .card-desc {
+            font-size: 14px;
+            color: #999;
+            margin-top: 15px;
+        }
+        .card-arrow {
+            margin-top: 20px;
+            color: #667eea;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>施工标准与图集</h1>
+        <div class="card-container">
+            <a href="https://ima.qq.com/wiki/?shareId=a1f159a39e4fd7e8d4414e99d219591904a231d8f62e0c7f08dfa2a99cbc57cc" class="card" target="_blank">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zM6 20V4h6v6h6v10H6z"/></svg>
+                </div>
+                <div class="card-title">工程图集库-国标</div>
+                <div class="card-desc">点击进入查看</div>
+                <div class="card-arrow">→</div>
+            </a>
+            <a href="https://ima.qq.com/wiki/?shareId=de99fc7044cde4998ecdbaddcdca7d08c3daad98912ff2c6f8d9879412e5aa27" class="card" target="_blank">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                </div>
+                <div class="card-title">工程建标宝库</div>
+                <div class="card-desc">点击进入查看</div>
+                <div class="card-arrow">→</div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
