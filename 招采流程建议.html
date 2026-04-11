@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>建设工程招采流程建议</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 40px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        
+        .input-section {
+            margin-bottom: 40px;
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #495057;
+            font-size: 16px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ced4da;
+            border-radius: 6px;
+            font-size: 18px;
+            transition: border-color 0.3s ease;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .result-section {
+            margin-top: 40px;
+        }
+        
+        .result-card {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        .result-card h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .result-label {
+            font-weight: 600;
+            color: #495057;
+            font-size: 16px;
+        }
+        
+        .result-value {
+            font-size: 18px;
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        .flow-chart {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid #764ba2;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        .flow-chart h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .flow-step {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 6px;
+            border-left: 4px solid #764ba2;
+            transition: transform 0.2s ease;
+        }
+        
+        .flow-step:hover {
+            transform: translateX(5px);
+        }
+        
+        .flow-step h4 {
+            margin-bottom: 8px;
+            color: #764ba2;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .flow-step p {
+            margin: 0;
+            font-size: 14px;
+            color: #6c757d;
+        }
+        
+        .error {
+            color: #dc3545;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .input-row .input-group {
+            flex: 1;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .input-section,
+            .result-card,
+            .flow-chart {
+                padding: 20px;
+            }
+            
+            .input-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; color: #2c3e50; margin-bottom: 20px;">
+            建设工程招采流程建议<br>
+            <span style="font-size: 18px; font-weight: normal; color: #666;">武汉市政院工程建设咨询事业部（宏建公司）</span>
+        </h1>
+        
+        <div class="input-section">
+            <div class="input-group">
+                <label for="category">招采类别</label>
+                <select id="category" onchange="toggleCategoryFields()" style="width: 100%; padding: 15px; border: 2px solid #ced4da; border-radius: 6px; font-size: 16px; transition: border-color 0.3s ease;">
+                    <option value="service">服务类</option>
+                    <option value="engineering">工程类</option>
+                    <option value="goods">货物类</option>
+                </select>
+            </div>
+            
+            <div id="serviceFields" class="hidden">
+                <div class="input-group">
+                    <label for="serviceType">服务类型</label>
+                    <select id="serviceType" onchange="toggleServiceFields()" style="width: 100%; padding: 15px; border: 2px solid #ced4da; border-radius: 6px; font-size: 16px; transition: border-color 0.3s ease;">
+                        <option value="design">工程设计</option>
+                        <option value="survey">工程勘察</option>
+                        <option value="supervision">工程监理</option>
+                        <option value="other">其他服务</option>
+                    </select>
+                </div>
+                
+                <div id="surveyFields" class="hidden">
+                    <div class="input-group">
+                        <label for="surveyType">勘察类型</label>
+                        <select id="surveyType" onchange="toggleSurveyFields()" style="width: 100%; padding: 15px; border: 2px solid #ced4da; border-radius: 6px; font-size: 16px; transition: border-color 0.3s ease;">
+                            <option value="geotechnical">岩土工程勘察</option>
+                            <option value="surveying">工程测量</option>
+                        </select>
+                    </div>
+                    
+                    <div id="geotechnicalFields" class="input-group">
+                        <label for="geotechnicalLevel">岩土工程勘察-项目特征</label>
+                        <select id="geotechnicalLevel" style="width: 100%; padding: 15px; border: 2px solid #ced4da; border-radius: 6px; font-size: 16px;">
+                            <option value="">-- 请选择 --</option>
+                            <optgroup label="甲级资质项目">
+                                <option value="geoA">甲级：岩土工程勘察等级为甲级的工程</option>
+                                <option value="geoA">甲级：国家重点项目的岩土工程勘察</option>
+                                <option value="geoA">甲级：地基基础设计等级为甲级的工程项目</option>
+                                <option value="geoA">甲级：极软弱或非均质地基、严重不良特殊性岩土上的大中小型项目</option>
+                                <option value="geoA">甲级：强烈地下水干扰的深基坑、特深基础</option>
+                                <option value="geoA">甲级：大型深埋过江地下管线、特大桥大型立交桥</option>
+                                <option value="geoA">甲级：大型竖井巷道、地铁隧道、大型地下洞室</option>
+                                <option value="geoA">甲级：安全等级为一级的桩基墩基、沉井沉箱</option>
+                                <option value="geoA">甲级：特大型、大型建设项目</option>
+                            </optgroup>
+                            <optgroup label="乙级资质项目">
+                                <option value="geoB">乙级：岩土工程勘察等级为乙级的工程</option>
+                                <option value="geoB">乙级：地基基础设计等级为乙级的工程项目</option>
+                                <option value="geoB">乙级：中型深埋过江地下管线</option>
+                                <option value="geoB">乙级：中桥中型立交桥、中型竖井巷道隧道</option>
+                                <option value="geoB">乙级：安全等级为二级的桩基墩基、中型桥梁基础</option>
+                                <option value="geoB">乙级：中型建设项目</option>
+                            </optgroup>
+                            <optgroup label="丙级资质项目">
+                                <option value="geoC">丙级：岩土工程勘察等级为丙级的工程</option>
+                                <option value="geoC">丙级：地基基础设计等级为丙级的工程项目</option>
+                                <option value="geoC">丙级：小桥涵洞、安全等级三级的桩基墩基</option>
+                                <option value="geoC">丙级：小型建设项目</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    
+                    <div id="surveyingFields" class="input-group hidden">
+                        <label for="surveyingLevel">工程测量-项目特征</label>
+                        <select id="surveyingLevel" style="width: 100%; padding: 15px; border: 2px solid #ced4da; border-radius: 6px; font-size: 16px;">
+                            <option value="">-- 请选择 --</option>
+                            <optgroup label="甲级资质项目">
+                                <option value="surA">甲级：国家重点项目的首级控制测量、变形监测</option>
+                                <option value="surA">甲级：三等及以上GNSS控制测量、四等及以上导线测量、二等及以上水准测量</option>
+                                <option value="surA">甲级：大、中城市规划定测量线、拨地</option>
+                                <option value="surA">甲级：20km²及以上大比例尺地形图</option>
+                                <option value="surA">甲级：国家大型、重点、特殊项目精密工程测量</option>
+                                <option value="surA">甲级：20km及以上线路工程测量</option>
+                                <option value="surA">甲级：总长度20km及以上综合地下管线测量</option>
+                                <option value="surA">甲级：甲级建筑变形、重要古建筑变形、大型市政桥梁变形</option>
+                                <option value="surA">甲级：大中型、重点、特殊水利水电工程测量</option>
+                                <option value="surA">甲级：地铁、轻轨隧道工程测量</option>
+                            </optgroup>
+                            <optgroup label="乙级资质项目">
+                                <option value="surB">乙级：四等GNSS控制测量、一、二级导线测量</option>
+                                <option value="surB">乙级：小城镇规划定测量线、拨地</option>
+                                <option value="surB">乙级：10-20km²大比例尺地形图</option>
+                                <option value="surB">乙级：一般工程精密工程测量</option>
+                                <option value="surB">乙级：5-20km线路工程测量</option>
+                                <option value="surB">乙级：总长度20km以下综合地下管线测量</option>
+                                <option value="surB">乙级：乙、丙级建筑变形，地表道路沉降</option>
+                                <option value="surB">乙级：小型水利水电工程测量</option>
+                            </optgroup>
+                            <optgroup label="丙级资质项目">
+                                <option value="surC">丙级：一、二、三级GNSS控制测量，三级导线测量，五等水准测量</option>
+                                <option value="surC">丙级：10km²及以下大比例尺地形图</option>
+                                <option value="surC">丙级：5km及以下线路工程测量</option>
+                                <option value="surC">丙级：长度不超过5km的单一地下管线测量</option>
+                                <option value="surC">丙级：水域测量或水利、水电局部工程测量</option>
+                                <option value="surC">丙级：其它小型工程或面积较小的施工放样</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="supervisionFields" class="hidden">
+                    <div class="input-group">
+                        <label for="supervisionCategory">工程类别</label>
+                        <select id="supervisionCategory" onchange="toggleSupervisionCategory()" style="width: 100%; padding: 15px; border: 2px solid #ced4da; border-radius: 6px; font-size: 16px;">
+                            <option value="">-- 请选择 --</option>
+                            <option value="building">房屋建筑工程</option>
+                            <option value="municipal">市政公用工程</option>
+                        </select>
+                    </div>
+                    
+                    <div id="supervisionProjectFields" class="input-group hidden">
+                        <label for="supervisionProject">项目情况</label>
+                        <select id="supervisionProject" style="width: 100%; padding: 15px; border: 2px solid #ced4da; border-radius: 6px; font-size: 16px;">
+                            <option value="">-- 请选择项目规模 --</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="designFields" class="hidden">
+                    <div class="input-group">
+                        <label for="designType">设计类型</label>
+                        <select id="designType" onchange="toggleDesignFields()" style="width: 100%; padding: 15px; border: 2px solid #ced4da; border-radius: 6px; font-size: 16px; transition: border-color 0.3s ease;">
+                            <option value="municipal">市政工程设计</option>
+                            <option value="building">建筑工程设计</option>
+                        </select>
+                    </div>
+                    
+                    <div id="municipalDesignFields" class="hidden">
+                        <div class="input-group">
+                            <label for="municipalDesignType">市政工程类型</label>
+                            <select id="municipalDesignType" onchange="toggleDesignParamField()" style="width: 100%; padding: 15px; border: 2px solid #ced4da; border-radius: 6px; font-size: 16px; transition: border-color 0.3s ease;">
+                                <option value="waterSupply">给水工程-净水厂</option>
+                                <option value="waterSupplyPipe">给水工程-管网/泵站</option>
+                                <option value="waterSupplyPipeline">给水工程-管道</option>
+                                <option value="drainage">排水工程-处理厂</option>
+                                <option value="drainagePipe">排水工程-管网/泵站</option>
+                                <option value="drainagePipeline">排水工程-管道</option>
+                                <option value="gasSupply">燃气工程-输配系统</option>
+                                <option value="gasPlant">燃气工程-气源厂/储备站</option>
+                                <option value="heatSource">热力工程-热源厂</option>
+                                <option value="heatPipe">热力工程-热网系统</option>
+                                <option value="heatArea">热力工程-供热面积</option>
+                                <option value="roadMain">道路工程-快速路/主干道</option>
+                                <option value="roadSecondary">道路工程-次干路</option>
+                                <option value="roadBranch">道路工程-支路</option>
+                                <option value="bridgeLength">桥梁工程-单跨长度</option>
+                                <option value="bridgeTotal">桥梁工程-总长度</option>
+                                <option value="tunnel">城市隧道工程</option>
+                                <option value="publicBRT">公共交通工程-BRT</option>
+                                <option value="publicTram">公共交通工程-电车系统</option>
+                                <option value="publicLane">公共交通工程-专用道</option>
+                                <option value="publicStation">公共交通工程-公交场站</option>
+                                <option value="publicHub">公共交通工程-公交枢纽</option>
+                                <option value="envLandfill">环境卫生工程-卫生填埋</option>
+                                <option value="envCompost">环境卫生工程-堆(制)肥工程</option>
+                                <option value="envTransfer">环境卫生工程-转运站</option>
+                                <option value="envMedical">环境卫生工程-医疗废弃物</option>
+                            </select>
+                        </div>
+                        
+                        <div id="designParamField" class="input-group">
+                            <label id="designParamLabel" for="designParam">工程规模</label>
+                            <input type="number" id="designParam" placeholder="请输入规模参数" min="0" step="0.1">
+                        </div>
+                    </div>
+                    
+                    <div id="buildingDesignFields" class="hidden">
+                        <div class="input-group">
+                            <label for="buildingDesignType">建筑工程类型</label>
+                            <select id="buildingDesignType" onchange="toggleDesignParamField()" style="width: 100%; padding: 15px; border: 2px solid #ced4da; border-radius: 6px; font-size: 16px; transition: border-color 0.3s ease;">
+                                <option value="generalBuilding">一般公共建筑-单体建筑面积</option>
+                                <option value="generalHeight">一般公共建筑-建筑高度</option>
+                                <option value="generalComplex">一般公共建筑-复杂程度</option>
+                                <option value="industrialPlant">工业厂房-跨度/吊车吨位</option>
+                                <option value="residentialFloor">住宅宿舍-层数</option>
+                                <option value="residentialComplex">住宅小区/工厂生活区-总建筑面积</option>
+                                <option value="undergroundSpace">地下工程-总建筑面积</option>
+                                <option value="undergroundDefense">地下工程-附建式人防</option>
+                            </select>
+                        </div>
+                        
+                        <div id="complexDetailFields" class="input-group hidden">
+                            <label for="complexDetailType">复杂程度明细</label>
+                            <select id="complexDetailType" style="width: 100%; padding: 15px; border: 2px solid #ced4da; border-radius: 6px; font-size: 16px;">
+                                <option value="" disabled>--- 大型(甲级) ---</option>
+                                <option value="complexLarge1">大型公共建筑工程</option>
+                                <option value="complexLarge2">技术要求复杂的省(市)级中小型公共建筑工程</option>
+                                <option value="complexLarge3">高度>50m的公共建筑工程</option>
+                                <option value="complexLarge4">四、五星级饭店标准的室内装修工程</option>
+                                <option value="complexLarge5">高标准的古建筑，保护性建筑和地下建筑工程</option>
+                                <option value="complexLarge6">高标准的建筑环境设计和室外工程</option>
+                                <option value="complexLarge7">技术要求复杂的工业厂房</option>
+                                <option value="" disabled>--- 中型(乙级) ---</option>
+                                <option value="complexMedium1">中型公共建筑工程</option>
+                                <option value="complexMedium2">技术要求复杂的小型公共建筑工程</option>
+                                <option value="complexMedium3">高度24-50m的一般公共建筑工程</option>
+                                <option value="complexMedium4">仿古建筑、一般标准的古建筑</option>
+                                <option value="complexMedium5">大中型仓储建筑工程</option>
+                                <option value="complexMedium6">一般标准的建筑环境设计和室外工程</option>
+                                <option value="complexMedium7">跨度小于30米的单层厂房或仓库</option>
+                                <option value="complexMedium8">二、三星级饭店标准的室内装修工程</option>
+                                <option value="" disabled>--- 小型(丙级) ---</option>
+                                <option value="complexSmall1">功能单一的小型公共建筑工程</option>
+                                <option value="complexSmall2">高度小于24m的一般公共建筑工程</option>
+                                <option value="complexSmall3">小型仓储建筑工程</option>
+                                <option value="complexSmall4">简单的设备用房及配套用房工程</option>
+                                <option value="complexSmall5">简单的建筑环境设计及室外工程</option>
+                                <option value="complexSmall6">一星级饭店及以下的室内装修工程</option>
+                                <option value="complexSmall7">跨度小于24米的单层厂房或仓库</option>
+                            </select>
+                        </div>
+                        
+                        <div id="designParamField2" class="input-group">
+                            <label id="designParamLabel2" for="designParam2">工程规模</label>
+                            <input type="number" id="designParam2" placeholder="请输入规模参数" min="0" step="0.1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="engineeringFields" class="hidden">
+                <div class="input-group">
+                    <label for="engineeringType">工程类型</label>
+                    <select id="engineeringType" onchange="toggleEngineeringTypeFields()" style="width: 100%; padding: 15px; border: 2px solid #ced4da; border-radius: 6px; font-size: 16px; transition: border-color 0.3s ease;">
+                        <option value="construction">建筑工程</option>
+                        <option value="municipal">市政公用工程</option>
+                    </select>
+                </div>
+                
+                <div id="constructionFields">
+                    <div class="input-group">
+                        <label for="heightType">建筑/构筑物类型</label>
+                        <select id="heightType" style="width: 100%; padding: 15px; border: 2px solid #ced4da; border-radius: 6px; font-size: 16px; transition: border-color 0.3s ease;">
+                            <option value="building">工业/民用建筑（建筑高度）</option>
+                            <option value="structure">构筑物（构筑物高度）</option>
+                        </select>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="buildingHeight">建筑/构筑物高度（米）</label>
+                            <input type="number" id="buildingHeight" placeholder="如：50" min="0" step="0.1">
+                        </div>
+                        <div class="input-group">
+                            <label for="buildingArea">建筑面积（平方米）</label>
+                            <input type="number" id="buildingArea" placeholder="如：10000" min="0" step="1">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="span">单跨跨度（米）</label>
+                        <input type="number" id="span" placeholder="如：24" min="0" step="0.1">
+                    </div>
+                </div>
+                
+                <div id="municipalFields" class="hidden">
+                    <div class="input-group">
+                        <label for="municipalType">市政工程类型</label>
+                        <select id="municipalType" onchange="toggleMunicipalFields()" style="width: 100%; padding: 15px; border: 2px solid #ced4da; border-radius: 6px; font-size: 16px; transition: border-color 0.3s ease;">
+                            <option value="road">城市道路工程（仅铺装，无管线）</option>
+                            <option value="bridge">城市桥梁工程</option>
+                            <option value="waterSupply">供水工程</option>
+                            <option value="sewage">污水处理工程</option>
+                            <option value="waterPump">给水/污水泵站</option>
+                            <option value="pipeline">给排水管道工程</option>
+                            <option value="gas">燃气管道/调压站</option>
+                            <option value="heat">热力工程/热力管道</option>
+                            <option value="waste">城市生活垃圾处理工程</option>
+                            <option value="tunnel">隧道/地下交通工程</option>
+                            <option value="square">城市广场/停车场</option>
+                            <option value="comprehensive">市政综合工程</option>
+                        </select>
+                    </div>
+                    
+                    <div id="municipalParamField" class="input-group">
+                        <label id="municipalParamLabel" for="municipalParam">工程规模参数</label>
+                        <input type="number" id="municipalParam" placeholder="请输入工程规模参数" min="0" step="0.1">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label for="amount">招采金额（万元）</label>
+                <input type="number" id="amount" placeholder="请输入招采金额" min="0" step="0.01">
+            </div>
+            <button onclick="calculateProcurementFlow()">生成流程建议</button>
+        </div>
+        
+        <div class="result-section" id="resultSection" style="display: none;">
+            <div class="result-card">
+                <h3>推荐结果</h3>
+                
+                <div class="result-item">
+                    <div class="result-label">推荐招采形式</div>
+                    <div class="result-value" id="procurementType"></div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-label">预计招标时间</div>
+                    <div class="result-value" id="estimatedTime"></div>
+                </div>
+            </div>
+            
+            <div class="result-card" id="serviceQualificationCard" style="display: none;">
+                <h3>资质要求</h3>
+                
+                <div class="result-item">
+                    <div class="result-label">适用最低资质等级</div>
+                    <div class="result-value" id="serviceQualificationLevel"></div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-label">人员要求</div>
+                    <div class="result-value" id="servicePersonnelRequirement"></div>
+                </div>
+                
+                <div class="result-item" style="display: block;">
+                    <div class="result-label" style="margin-bottom: 10px;">企业资质选用原因</div>
+                    <div id="serviceEnterpriseRequirement" style="color: #667eea; font-size: 16px;"></div>
+                </div>
+            </div>
+            
+            <div class="result-card" id="qualificationCard" style="display: none;">
+                <h3>资质要求</h3>
+                
+                <div class="result-item">
+                    <div class="result-label">适用最低资质等级</div>
+                    <div class="result-value" id="qualificationLevel"></div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-label">项目负责人要求</div>
+                    <div class="result-value" id="projectManagerRequirement"></div>
+                </div>
+                
+                <div class="result-item" style="display: block;">
+                    <div class="result-label" style="margin-bottom: 10px;">企业资质选用原因</div>
+                    <div id="enterpriseRequirement" style="color: #667eea; font-size: 16px;"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 30px; padding: 20px; background-color: #f8f9fa; border-radius: 8px; border-left: 4px solid #ffc107;">
+            <h4 style="color: #2c3e50; margin-bottom: 15px;">温馨提示</h4>
+            <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                <li style="margin-bottom: 8px; color: #6c757d;">1. 本建议生成仅针对武汉政府投资项目，企业投资项目按照企业制度执行。</li>
+                <li style="margin-bottom: 8px; color: #6c757d;">2. 生成建议不含单一来源招采、集中采购。</li>
+                <li style="margin-bottom: 8px; color: #6c757d;">3. 实际需结合各职能部门、企业招采制度进行调整。</li>
+                <li style="margin-bottom: 8px; color: #6c757d;">4. 竞争性谈判为低价中标，竞争性磋商为综合评分。</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        function toggleCategoryFields() {
+            const category = document.getElementById('category').value;
+            const serviceFields = document.getElementById('serviceFields');
+            const engineeringFields = document.getElementById('engineeringFields');
+            
+            if (category === 'service') {
+                serviceFields.classList.remove('hidden');
+                engineeringFields.classList.add('hidden');
+                toggleServiceFields();
+            } else if (category === 'engineering') {
+                serviceFields.classList.add('hidden');
+                engineeringFields.classList.remove('hidden');
+                toggleEngineeringTypeFields();
+            } else {
+                serviceFields.classList.add('hidden');
+                engineeringFields.classList.add('hidden');
+            }
+        }
+        
+        function toggleServiceFields() {
+            const serviceType = document.getElementById('serviceType').value;
+            const designFields = document.getElementById('designFields');
+            const surveyFields = document.getElementById('surveyFields');
+            const supervisionFields = document.getElementById('supervisionFields');
+            
+            if (serviceType === 'design') {
+                designFields.classList.remove('hidden');
+                surveyFields.classList.add('hidden');
+                supervisionFields.classList.add('hidden');
+                toggleDesignFields();
+            } else if (serviceType === 'survey') {
+                designFields.classList.add('hidden');
+                surveyFields.classList.remove('hidden');
+                supervisionFields.classList.add('hidden');
+                toggleSurveyFields();
+            } else if (serviceType === 'supervision') {
+                designFields.classList.add('hidden');
+                surveyFields.classList.add('hidden');
+                supervisionFields.classList.remove('hidden');
+                toggleSupervisionFields();
+            } else {
+                designFields.classList.add('hidden');
+                surveyFields.classList.add('hidden');
+                supervisionFields.classList.add('hidden');
+            }
+        }
+        
+        function toggleSupervisionFields() {
+            const serviceType = document.getElementById('serviceType').value;
+            const supervisionFields = document.getElementById('supervisionFields');
+            
+            if (serviceType === 'supervision') {
+                supervisionFields.classList.remove('hidden');
+                toggleSupervisionCategory();
+            } else {
+                supervisionFields.classList.add('hidden');
+            }
+        }
+        
+        function toggleSupervisionCategory() {
+            const supervisionCategory = document.getElementById('supervisionCategory').value;
+            const supervisionProjectFields = document.getElementById('supervisionProjectFields');
+            const supervisionProject = document.getElementById('supervisionProject');
+            
+            supervisionProject.innerHTML = '<option value="">-- 请选择项目规模 --</option>';
+            
+            if (!supervisionCategory) {
+                supervisionProjectFields.classList.add('hidden');
+                return;
+            }
+            
+            supervisionProjectFields.classList.remove('hidden');
+            
+            const projectOptions = {
+                'building': [
+                    { value: 'b1', text: '一般公共建筑：28层以上；36米跨度以上；单项工程建筑面积3万㎡以上' },
+                    { value: 'b2', text: '一般公共建筑：14-28层；24-36米跨度；单项工程建筑面积1-3万㎡' },
+                    { value: 'b3', text: '一般公共建筑：14层以下；24米跨度以下；单项工程建筑面积1万㎡以下' },
+                    { value: 'b4', text: '高耸构筑工程：高度120米以上' },
+                    { value: 'b5', text: '高耸构筑工程：高度70-120米' },
+                    { value: 'b6', text: '高耸构筑工程：高度70米以下' },
+                    { value: 'b7', text: '住宅工程：小区建筑面积12万㎡以上；单项工程28层以上' },
+                    { value: 'b8', text: '住宅工程：建筑面积6-12万㎡；单项工程14-28层' },
+                    { value: 'b9', text: '住宅工程：建筑面积6万㎡以下；单项工程14层以下' }
+                ],
+                'municipal': [
+                    { value: 'm1', text: '城市道路工程：一级（城市快速路、主干路，100米以上桥梁；1000米以上隧道）' },
+                    { value: 'm2', text: '城市道路工程：二级（城市次干路，100米以下桥梁；1000米以下隧道）' },
+                    { value: 'm3', text: '城市道路工程：三级（支路工程、过街天桥及地下通道）' },
+                    { value: 'm4', text: '给水排水工程：一级（10万吨/日以上的给水厂；5万吨/日污水处理）' },
+                    { value: 'm5', text: '给水排水工程：二级（2-10万吨/日给水厂；1-5万吨/日污水处理）' },
+                    { value: 'm6', text: '给水排水工程：三级（2万吨/日以下给水厂；1万吨/日以下污水处理）' },
+                    { value: 'm7', text: '燃气热力工程：一级（1000立方米以上液化气贮罐场；15万立方米/日以上的燃气工程）' },
+                    { value: 'm8', text: '燃气热力工程：二级（1000立方米以下液化气贮罐场；15万立方米/日以下燃气工程）' },
+                    { value: 'm9', text: '燃气热力工程：三级（50万平方米以下热力工程）' },
+                    { value: 'm10', text: '垃圾处理工程：一级（1200吨/日以上的垃圾焚烧和填埋工程）' },
+                    { value: 'm11', text: '垃圾处理工程：二级（500-1200吨/日的垃圾焚烧及填埋工程）' },
+                    { value: 'm12', text: '垃圾处理工程：三级（500吨/日以下的垃圾焚烧及填埋工程）' },
+                    { value: 'm13', text: '地铁轻轨工程：一级（各类地铁轻轨工程）' },
+                    { value: 'm14', text: '风景园林工程：一级（总投资3000万元以上）' },
+                    { value: 'm15', text: '风景园林工程：二级（总投资1000万-3000万元）' },
+                    { value: 'm16', text: '风景园林工程：三级（总投资1000万元以下）' }
+                ]
+            };
+            
+            const options = projectOptions[supervisionCategory] || [];
+            options.forEach(opt => {
+                const option = document.createElement('option');
+                option.value = opt.value;
+                option.textContent = opt.text;
+                supervisionProject.appendChild(option);
+            });
+        }
+        
+        function toggleSurveyFields() {
+            const surveyType = document.getElementById('surveyType').value;
+            const geotechnicalFields = document.getElementById('geotechnicalFields');
+            const surveyingFields = document.getElementById('surveyingFields');
+            
+            if (surveyType === 'geotechnical') {
+                geotechnicalFields.classList.remove('hidden');
+                surveyingFields.classList.add('hidden');
+            } else {
+                geotechnicalFields.classList.add('hidden');
+                surveyingFields.classList.remove('hidden');
+            }
+        }
+        
+        function toggleDesignFields() {
+            const designType = document.getElementById('designType').value;
+            const municipalDesignFields = document.getElementById('municipalDesignFields');
+            const buildingDesignFields = document.getElementById('buildingDesignFields');
+            
+            if (designType === 'municipal') {
+                municipalDesignFields.classList.remove('hidden');
+                buildingDesignFields.classList.add('hidden');
+                toggleDesignParamField();
+            } else if (designType === 'building') {
+                municipalDesignFields.classList.add('hidden');
+                buildingDesignFields.classList.remove('hidden');
+                toggleDesignParamField();
+            } else {
+                municipalDesignFields.classList.add('hidden');
+                buildingDesignFields.classList.add('hidden');
+            }
+        }
+        
+        function toggleDesignParamField() {
+            const designType = document.getElementById('municipalDesignType').value;
+            const paramField = document.getElementById('designParamField');
+            const paramLabel = document.getElementById('designParamLabel');
+            
+            const paramConfig = {
+                'waterSupply': { label: '净水厂规模（万吨/日）', placeholder: '如：15' },
+                'waterSupplyPipe': { label: '管网/泵站规模（万吨/日）', placeholder: '如：15' },
+                'waterSupplyPipeline': { label: '管道管径（毫米）', placeholder: '如：1200' },
+                'drainage': { label: '处理厂规模（万吨/日）', placeholder: '如：10' },
+                'drainagePipe': { label: '管网/泵站规模（万吨/日）', placeholder: '如：8' },
+                'drainagePipeline': { label: '管道管径（毫米）', placeholder: '如：1200' },
+                'gasSupply': { label: '燃气输配系统', placeholder: '均属大型项目' },
+                'gasPlant': { label: '气源厂/储备站', placeholder: '均属大型项目' },
+                'heatSource': { label: '热源厂', placeholder: '均属大型项目' },
+                'heatPipe': { label: '热网系统管径（毫米）', placeholder: '如：600' },
+                'heatArea': { label: '供热面积（万平方米）', placeholder: '如：300' },
+                'roadMain': { label: '道路工程', placeholder: '快速路/主干道-大型' },
+                'roadSecondary': { label: '道路工程', placeholder: '次干路-中型' },
+                'roadBranch': { label: '道路工程', placeholder: '支路-小型' },
+                'bridgeLength': { label: '桥梁单跨长度（米）', placeholder: '如：50' },
+                'bridgeTotal': { label: '桥梁总长度（米）', placeholder: '如：120' },
+                'tunnel': { label: '城市隧道工程', placeholder: '均属大型项目' },
+                'publicBRT': { label: '快速公交系统(BRT)', placeholder: '均属大型项目' },
+                'publicTram': { label: '电车系统', placeholder: '均属大型项目' },
+                'publicLane': { label: '公共交通专用道', placeholder: '均属大型项目' },
+                'publicStation': { label: '公交场站面积（平方米）', placeholder: '如：5000' },
+                'publicHub': { label: '公交枢纽', placeholder: '均属大型项目' },
+                'envLandfill': { label: '卫生填埋规模（吨/日）', placeholder: '如：300' },
+                'envCompost': { label: '堆(制)肥工程规模（吨/日）', placeholder: '如：200' },
+                'envTransfer': { label: '转运站规模（吨/日）', placeholder: '如：300' },
+                'envMedical': { label: '医疗废弃物规模（吨/日）', placeholder: '如：3' },
+                'generalBuilding': { label: '单体建筑面积（平方米）', placeholder: '如：15000' },
+                'generalHeight': { label: '建筑高度（米）', placeholder: '如：40' },
+                'complexLarge1': { label: '大型公共建筑工程', placeholder: '甲级资质' },
+                'complexLarge2': { label: '技术要求复杂的省(市)级中小型公共建筑工程', placeholder: '甲级资质' },
+                'complexLarge3': { label: '高度>50m的公共建筑工程', placeholder: '甲级资质' },
+                'complexLarge4': { label: '四、五星级饭店标准的室内装修工程', placeholder: '甲级资质' },
+                'complexLarge5': { label: '高标准的古建筑、保护性建筑和地下建筑工程', placeholder: '甲级资质' },
+                'complexLarge6': { label: '高标准的建筑环境设计和室外工程', placeholder: '甲级资质' },
+                'complexLarge7': { label: '技术要求复杂的工业厂房', placeholder: '甲级资质' },
+                'complexMedium1': { label: '中型公共建筑工程', placeholder: '乙级资质' },
+                'complexMedium2': { label: '技术要求复杂的小型公共建筑工程', placeholder: '乙级资质' },
+                'complexMedium3': { label: '高度24-50m的一般公共建筑工程', placeholder: '乙级资质' },
+                'complexMedium4': { label: '仿古建筑、一般标准的古建筑', placeholder: '乙级资质' },
+                'complexMedium5': { label: '大中型仓储建筑工程', placeholder: '乙级资质' },
+                'complexMedium6': { label: '一般标准的建筑环境设计和室外工程', placeholder: '乙级资质' },
+                'complexMedium7': { label: '跨度<30米的单层厂房或仓库', placeholder: '乙级资质' },
+                'complexMedium8': { label: '二、三星级饭店标准的室内装修工程', placeholder: '乙级资质' },
+                'complexSmall1': { label: '功能单一的小型公共建筑工程', placeholder: '丙级资质' },
+                'complexSmall2': { label: '高度<24m的一般公共建筑工程', placeholder: '丙级资质' },
+                'complexSmall3': { label: '小型仓储建筑工程', placeholder: '丙级资质' },
+                'complexSmall4': { label: '简单的设备用房及配套用房工程', placeholder: '丙级资质' },
+                'complexSmall5': { label: '简单的建筑环境设计及室外工程', placeholder: '丙级资质' },
+                'complexSmall6': { label: '一星级饭店及以下的室内装修工程', placeholder: '丙级资质' },
+                'complexSmall7': { label: '跨度<24米的单层厂房或仓库', placeholder: '丙级资质' },
+                'industrialPlant': { label: '工业厂房跨度（米）', placeholder: '如：25' },
+                'residentialFloor': { label: '住宅层数（层）', placeholder: '如：15' },
+                'residentialComplex': { label: '总建筑面积（万平方米）', placeholder: '如：25' },
+                'undergroundSpace': { label: '地下建筑面积（平方米）', placeholder: '如：8000' },
+                'undergroundDefense': { label: '人防等级', placeholder: '4=四级,5=五级,6=配套' }
+            };
+            
+            const designTypeValue = document.getElementById('designType').value;
+            
+            if (designTypeValue === 'building') {
+                const buildingType = document.getElementById('buildingDesignType').value;
+                const paramField2 = document.getElementById('designParamField2');
+                const paramLabel2 = document.getElementById('designParamLabel2');
+                const complexDetailFields = document.getElementById('complexDetailFields');
+                
+                if (buildingType === 'generalComplex') {
+                    complexDetailFields.classList.remove('hidden');
+                    paramField2.classList.add('hidden');
+                } else {
+                    complexDetailFields.classList.add('hidden');
+                    const config = paramConfig[buildingType] || { label: '工程规模', placeholder: '请输入' };
+                    paramLabel2.textContent = config.label;
+                    document.getElementById('designParam2').placeholder = config.placeholder;
+                    paramField2.classList.remove('hidden');
+                }
+            } else {
+                const config = paramConfig[designType] || { label: '工程规模', placeholder: '请输入' };
+                paramLabel.textContent = config.label;
+                document.getElementById('designParam').placeholder = config.placeholder;
+                paramField.style.display = 'block';
+            }
+        }
+        
+        function toggleEngineeringFields() {
+            const category = document.getElementById('category').value;
+            const engineeringFields = document.getElementById('engineeringFields');
+            if (category === 'engineering') {
+                engineeringFields.classList.remove('hidden');
+            } else {
+                engineeringFields.classList.add('hidden');
+            }
+        }
+        
+        function toggleEngineeringTypeFields() {
+            const engineeringType = document.getElementById('engineeringType').value;
+            const constructionFields = document.getElementById('constructionFields');
+            const municipalFields = document.getElementById('municipalFields');
+            if (engineeringType === 'construction') {
+                constructionFields.classList.remove('hidden');
+                municipalFields.classList.add('hidden');
+            } else {
+                constructionFields.classList.add('hidden');
+                municipalFields.classList.remove('hidden');
+                toggleMunicipalFields();
+            }
+        }
+        
+        function toggleMunicipalFields() {
+            const municipalType = document.getElementById('municipalType').value;
+            const paramLabel = document.getElementById('municipalParamLabel');
+            const paramInput = document.getElementById('municipalParam');
+            const paramField = document.getElementById('municipalParamField');
+            
+            const level2OnlyTypes = ['road', 'pipeline', 'waste', 'square'];
+            
+            if (level2OnlyTypes.includes(municipalType)) {
+                paramField.style.display = 'none';
+                return;
+            }
+            
+            paramField.style.display = 'block';
+            
+            const paramConfig = {
+                'bridge': { label: '桥梁单跨跨度（米）', placeholder: '如：30', step: '0.1' },
+                'waterSupply': { label: '供水规模（万吨/日）', placeholder: '如：10', step: '0.1' },
+                'sewage': { label: '污水处理规模（万吨/日）', placeholder: '如：8', step: '0.1' },
+                'waterPump': { label: '泵站规模（万吨/日）', placeholder: '如：10', step: '0.1' },
+                'gas': { label: '燃气管道压力（公斤/平方厘米）', placeholder: '如：2', step: '0.1' },
+                'heat': { label: '供热面积（万平方米）', placeholder: '如：100', step: '0.1' },
+                'tunnel': { label: '隧道断面面积（平方米）', placeholder: '如：20', step: '0.1' },
+                'comprehensive': { label: '工程合同额（万元）', placeholder: '如：3000', step: '1' }
+            };
+            
+            const config = paramConfig[municipalType] || { label: '工程规模参数', placeholder: '请输入', step: '0.1' };
+            paramLabel.textContent = config.label;
+            paramInput.placeholder = config.placeholder;
+            paramInput.step = config.step;
+        }
+        
+        function calculateQualification(engineeringType, buildingHeight, buildingArea, span, projectAmount, municipalType, municipalParam, heightType) {
+            let level, manager, enterprise;
+            
+            if (engineeringType === 'construction') {
+                const height = buildingHeight || 0;
+                const area = buildingArea || 0;
+                const spanVal = span || 0;
+                const amount = projectAmount || 0;
+                const hType = heightType || 'building';
+                
+                let isLevel1 = false;
+                if (hType === 'building') {
+                    isLevel1 = amount >= 3000 && height > 100 && height <= 200;
+                } else {
+                    isLevel1 = amount >= 3000 && height > 120 && height <= 240;
+                }
+                
+                const isLevel2 = height <= 100 || spanVal <= 39 || area <= 40000;
+                
+                if (isLevel1) {
+                    level = '一级资质';
+                    manager = '建筑工程专业一级注册建造师';
+                    enterprise = '可承担单项合同额3000万元以上的下列建筑工程的施工：(1)高度200米以下的工业、民用建筑工程；(2)高度240米以下的构筑物工程。';
+                } else if (isLevel2) {
+                    level = '二级资质';
+                    manager = '建筑工程专业二级及以上注册建造师';
+                    enterprise = '可承担下列建筑工程的施工：(1)高度100米以下的工业、民用建筑工程；(2)高度120米以下的构筑物工程；(3)建筑面积4万平方米以下的单体工业、民用建筑工程；(4)单跨跨度39米以下的建筑工程。';
+                } else {
+                    level = '特级资质';
+                    manager = '建筑工程专业特级注册建造师';
+                    enterprise = '可承担各类建筑工程的施工。注：建筑工程是指各类结构形式的民用建筑工程、工业建筑工程、构筑物工程以及相配套的道路、通信、管网管线等设施工程。';
+                }
+            } else {
+                const param = municipalParam || 0;
+                const mType = municipalType || 'road';
+                
+                let isLevel2 = false;
+                
+                switch(mType) {
+                    case 'road':
+                        isLevel2 = true;
+                        break;
+                    case 'bridge':
+                        isLevel2 = param <= 45;
+                        break;
+                    case 'waterSupply':
+                        isLevel2 = param <= 15;
+                        break;
+                    case 'sewage':
+                        isLevel2 = param <= 10;
+                        break;
+                    case 'waterPump':
+                        isLevel2 = param <= 25;
+                        break;
+                    case 'pipeline':
+                        isLevel2 = true;
+                        break;
+                    case 'gas':
+                        isLevel2 = param <= 4;
+                        break;
+                    case 'heat':
+                        isLevel2 = param <= 150;
+                        break;
+                    case 'waste':
+                        isLevel2 = true;
+                        break;
+                    case 'tunnel':
+                        isLevel2 = param <= 25;
+                        break;
+                    case 'square':
+                        isLevel2 = true;
+                        break;
+                    case 'comprehensive':
+                        isLevel2 = param < 4000;
+                        break;
+                    default:
+                        isLevel2 = false;
+                }
+                
+                if (param > 45 || (mType === 'bridge' && param > 45) || (mType === 'comprehensive' && param >= 4000) || (!isLevel2)) {
+                    level = '一级资质';
+                    manager = '市政公用工程专业一级注册建造师';
+                    enterprise = '可承担各类市政公用工程的施工。注：市政公用工程包括给水工程、排水工程、燃气工程、热力工程、城市道路工程、城市桥梁工程、城市隧道工程(指城市规划区内的穿山过江隧道、地铁隧道、地下交通工程、地下过街通道)、公共交通工程、轨道交通工程、环境卫生工程、照明工程、绿化工程。';
+                } else {
+                    level = '二级资质';
+                    manager = '市政公用工程专业二级及以上注册建造师';
+                    enterprise = '可承担下列市政公用工程的施工：(1)各类城市道路；单跨45米以下的城市桥梁；(2)15万吨/日以下的供水工程；10万吨/日以下的污水处理工程；25万吨/日以下的给水泵站、15万吨/日以下的污水泵站、雨水泵站；各类给排水及中水管道工程；(3)中压以下燃气管道、调压站；供热面积150万平方米以下热力工程和各类热力管道工程；(4)各类城市生活垃圾处理工程；(5)断面25平方米以下隧道工程和地下交通工程；(6)各类城市广场、地面停车场硬质铺装；(7)单项合同额4000万元以下的市政综合工程。注：市政综合工程指包括城市道路和桥梁、供水、排水、中水、燃气、热力、电力、通信、照明等中的任意两类以上的工程。';
+                }
+            }
+            
+            return { level, manager, enterprise };
+        }
+        
+        function calculateSurveyQualification(surveyType, levelCode) {
+            let level, personnel, enterprise;
+            
+            if (levelCode.startsWith('geo')) {
+                if (levelCode === 'geoA') {
+                    level = '甲级资质';
+                    personnel = '岩土工程专业甲级资质要求的技术负责人或注册岩土工程师';
+                    enterprise = '甲级资质可承担各类岩土工程勘察业务。';
+                } else if (levelCode === 'geoB') {
+                    level = '乙级资质';
+                    personnel = '岩土工程专业乙级及以上资质要求的技术负责人或注册岩土工程师';
+                    enterprise = '乙级资质可承担中型规模的岩土工程勘察业务。';
+                } else {
+                    level = '丙级资质';
+                    personnel = '岩土工程专业丙级资质要求的技术负责人或相关技术人员';
+                    enterprise = '丙级资质可承担小型规模的岩土工程勘察业务。';
+                }
+            } else {
+                if (levelCode === 'surA') {
+                    level = '甲级资质';
+                    personnel = '工程测量专业甲级资质要求的技术负责人或注册测绘师';
+                    enterprise = '甲级资质可承担各类工程测量业务。';
+                } else if (levelCode === 'surB') {
+                    level = '乙级资质';
+                    personnel = '工程测量专业乙级及以上资质要求的技术负责人或注册测绘师';
+                    enterprise = '乙级资质可承担中型规模的工程测量业务。';
+                } else {
+                    level = '丙级资质';
+                    personnel = '工程测量专业丙级资质要求的技术负责人或相关技术人员';
+                    enterprise = '丙级资质可承担小型规模的工程测量业务。';
+                }
+            }
+            
+            return { level, personnel, enterprise };
+        }
+        
+        function calculateDesignQualification(designType, municipalDesignType, designParam, buildingDesignType) {
+            let level, enterprise, personnel;
+            
+            if (designType === 'building') {
+                const param = designParam || 0;
+                const bType = buildingDesignType || 'generalBuilding';
+                
+                let isLevel3 = false;
+                let isLevel2 = false;
+                let sizeDesc = '';
+                
+                switch(bType) {
+                    case 'generalBuilding':
+                        isLevel3 = param <= 5000;
+                        isLevel2 = param <= 20000;
+                        sizeDesc = param + '平方米';
+                        break;
+                    case 'generalHeight':
+                        isLevel3 = param <= 24;
+                        isLevel2 = param <= 50;
+                        sizeDesc = param + '米';
+                        break;
+                    case 'complexLarge1':
+                    case 'complexLarge2':
+                    case 'complexLarge3':
+                    case 'complexLarge4':
+                    case 'complexLarge5':
+                    case 'complexLarge6':
+                    case 'complexLarge7':
+                        isLevel3 = false;
+                        isLevel2 = false;
+                        sizeDesc = paramConfig[buildingType] ? paramConfig[buildingType].label : '大型公共建筑工程';
+                        break;
+                    case 'complexMedium1':
+                    case 'complexMedium2':
+                    case 'complexMedium3':
+                    case 'complexMedium4':
+                    case 'complexMedium5':
+                    case 'complexMedium6':
+                    case 'complexMedium7':
+                    case 'complexMedium8':
+                        isLevel3 = false;
+                        isLevel2 = true;
+                        sizeDesc = paramConfig[buildingType] ? paramConfig[buildingType].label : '中型公共建筑工程';
+                        break;
+                    case 'complexSmall1':
+                    case 'complexSmall2':
+                    case 'complexSmall3':
+                    case 'complexSmall4':
+                    case 'complexSmall5':
+                    case 'complexSmall6':
+                    case 'complexSmall7':
+                        isLevel3 = true;
+                        isLevel2 = false;
+                        sizeDesc = paramConfig[buildingType] ? paramConfig[buildingType].label : '小型公共建筑工程';
+                        break;
+                    case 'industrialPlant':
+                        isLevel3 = param < 24;
+                        isLevel2 = param < 30;
+                        sizeDesc = param + '米跨度';
+                        break;
+                    case 'residentialFloor':
+                        isLevel3 = param <= 12;
+                        isLevel2 = param <= 20;
+                        sizeDesc = param + '层';
+                        break;
+                    case 'residentialComplex':
+                        isLevel3 = false;
+                        isLevel2 = true;
+                        sizeDesc = param + '万平方米';
+                        break;
+                    case 'undergroundSpace':
+                        isLevel3 = false;
+                        isLevel2 = param <= 10000;
+                        sizeDesc = param + '平方米';
+                        break;
+                    case 'undergroundDefense':
+                        isLevel3 = true;
+                        isLevel2 = param >= 5;
+                        sizeDesc = param === 4 ? '四级人防' : param === 5 ? '五级人防' : '人防配套工程';
+                        break;
+                    default:
+                        isLevel3 = false;
+                        isLevel2 = false;
+                }
+                
+                if (bType === 'undergroundDefense') {
+                    if (param === 4) {
+                        level = '甲级资质';
+                        personnel = '建筑工程相关专业注册执业人员或高级专业技术职称人员';
+                        enterprise = '本项目人防等级为' + sizeDesc + '，属于大型项目，甲级资质可承担各类规模建筑工程设计业务。';
+                    } else if (param >= 5) {
+                        level = '乙级资质';
+                        personnel = '建筑工程相关专业注册执业人员或中级及以上专业技术职称人员';
+                        enterprise = '本项目人防等级为' + sizeDesc + '，属于中型项目，乙级资质可承担中小型规模建筑工程设计业务。';
+                    } else {
+                        level = '丙级资质';
+                        personnel = '建筑工程相关专业注册执业人员或中级及以上专业技术职称人员';
+                        enterprise = '本项目属于' + sizeDesc + '，丙级资质可承担相应规模的建筑工程设计业务。';
+                    }
+                } else if (bType === 'residentialComplex') {
+                    if (param > 30) {
+                        level = '甲级资质';
+                        personnel = '建筑工程相关专业注册执业人员或高级专业技术职称人员';
+                        enterprise = '本项目总建筑面积为' + sizeDesc + '，属于大型项目，甲级资质可承担各类规模建筑工程设计业务。';
+                    } else {
+                        level = '乙级资质';
+                        personnel = '建筑工程相关专业注册执业人员或中级及以上专业技术职称人员';
+                        enterprise = '本项目总建筑面积为' + sizeDesc + '，属于中型项目，乙级资质可承担中小型规模建筑工程设计业务。';
+                    }
+                } else if (bType === 'undergroundSpace') {
+                    if (param > 10000) {
+                        level = '甲级资质';
+                        personnel = '建筑工程相关专业注册执业人员或高级专业技术职称人员';
+                        enterprise = '本项目地下建筑面积为' + sizeDesc + '，属于大型项目，甲级资质可承担各类规模建筑工程设计业务。';
+                    } else {
+                        level = '乙级资质';
+                        personnel = '建筑工程相关专业注册执业人员或中级及以上专业技术职称人员';
+                        enterprise = '本项目地下建筑面积为' + sizeDesc + '，属于中型项目，乙级资质可承担中小型规模建筑工程设计业务。';
+                    }
+                } else if (bType === 'residentialFloor') {
+                    if (param > 20) {
+                        level = '甲级资质';
+                        personnel = '建筑工程相关专业注册执业人员或高级专业技术职称人员';
+                        enterprise = '本项目为' + sizeDesc + '，属于大型项目，甲级资质可承担各类规模建筑工程设计业务。';
+                    } else if (isLevel2) {
+                        level = '乙级资质';
+                        personnel = '建筑工程相关专业注册执业人员或中级及以上专业技术职称人员';
+                        enterprise = '本项目为' + sizeDesc + '，属于中型项目，乙级资质可承担中小型规模建筑工程设计业务。';
+                    } else {
+                        level = '丙级资质';
+                        personnel = '建筑工程相关专业注册执业人员或中级及以上专业技术职称人员';
+                        enterprise = '本项目为' + sizeDesc + '，属于小型项目，丙级资质可承担小型规模建筑工程设计业务。';
+                    }
+                } else if (isLevel3) {
+                    level = '丙级资质';
+                    personnel = '建筑工程相关专业注册执业人员或中级及以上专业技术职称人员';
+                    enterprise = '本项目规模为' + sizeDesc + '，属于小型项目，丙级资质可承担小型规模的建筑工程设计业务。';
+                } else if (isLevel2) {
+                    level = '乙级资质';
+                    personnel = '建筑工程相关专业注册执业人员或中级及以上专业技术职称人员';
+                    enterprise = '本项目规模为' + sizeDesc + '，属于中型项目，乙级资质可承担中小型规模的建筑工程设计业务。';
+                } else {
+                    level = '甲级资质';
+                    personnel = '建筑工程相关专业注册执业人员或高级专业技术职称人员';
+                    enterprise = '本项目规模为' + sizeDesc + '，属于大型项目，甲级资质可承担各类规模的建筑工程设计业务。';
+                }
+            } else if (designType === 'municipal') {
+                const param = designParam || 0;
+                const mType = municipalDesignType || 'waterSupply';
+                
+                let isLevel3 = false;
+                let isLevel2 = false;
+                let sizeDesc = '';
+                
+                switch(mType) {
+                    case 'waterSupply':
+                        isLevel3 = param < 5;
+                        isLevel2 = param < 10;
+                        sizeDesc = param + '万吨/日';
+                        break;
+                    case 'waterSupplyPipe':
+                        isLevel3 = param < 5;
+                        isLevel2 = param < 20;
+                        sizeDesc = param + '万吨/日';
+                        break;
+                    case 'waterSupplyPipeline':
+                        isLevel3 = param < 1000;
+                        isLevel2 = param < 1600;
+                        sizeDesc = param + '毫米';
+                        break;
+                    case 'drainage':
+                        isLevel3 = param < 4;
+                        isLevel2 = param < 8;
+                        sizeDesc = param + '万吨/日';
+                        break;
+                    case 'drainagePipe':
+                        isLevel3 = param < 5;
+                        isLevel2 = param < 10;
+                        sizeDesc = param + '万吨/日';
+                        break;
+                    case 'drainagePipeline':
+                        isLevel3 = param <= 1000;
+                        isLevel2 = param < 1500;
+                        sizeDesc = param + '毫米';
+                        break;
+                    case 'gasSupply':
+                        isLevel3 = true;
+                        isLevel2 = true;
+                        sizeDesc = param + '万立方米/年';
+                        break;
+                    case 'gasPlant':
+                        isLevel3 = true;
+                        isLevel2 = true;
+                        sizeDesc = '气源厂/储备站';
+                        break;
+                    case 'heatSource':
+                        isLevel3 = true;
+                        isLevel2 = true;
+                        sizeDesc = param + 'MW';
+                        break;
+                    case 'heatPipe':
+                        isLevel3 = param <= 400;
+                        isLevel2 = param < 800;
+                        sizeDesc = param + '毫米';
+                        break;
+                    case 'heatArea':
+                        isLevel3 = param < 150;
+                        isLevel2 = param < 500;
+                        sizeDesc = param + '万平方米';
+                        break;
+                    case 'roadMain':
+                        isLevel3 = false;
+                        isLevel2 = false;
+                        sizeDesc = '快速路/主干道/互通式立体交叉';
+                        break;
+                    case 'roadSecondary':
+                        isLevel3 = false;
+                        isLevel2 = true;
+                        sizeDesc = '次干路/简单立体交叉';
+                        break;
+                    case 'roadBranch':
+                        isLevel3 = true;
+                        isLevel2 = false;
+                        sizeDesc = '城市支路';
+                        break;
+                    case 'bridgeLength':
+                        isLevel3 = param < 40;
+                        isLevel2 = false;
+                        sizeDesc = '单跨' + param + '米';
+                        break;
+                    case 'bridgeTotal':
+                        isLevel3 = param < 100;
+                        isLevel2 = false;
+                        sizeDesc = '总长' + param + '米';
+                        break;
+                    case 'tunnel':
+                        isLevel3 = false;
+                        isLevel2 = false;
+                        sizeDesc = '城市隧道工程均属大型';
+                        break;
+                    case 'publicBRT':
+                        isLevel3 = false;
+                        isLevel2 = false;
+                        sizeDesc = '快速公交系统(BRT)均属大型';
+                        break;
+                    case 'publicTram':
+                        isLevel3 = false;
+                        isLevel2 = false;
+                        sizeDesc = '电车系统工程均属大型';
+                        break;
+                    case 'publicLane':
+                        isLevel3 = false;
+                        isLevel2 = false;
+                        sizeDesc = '公共交通专用道工程均属大型';
+                        break;
+                    case 'publicStation':
+                        isLevel3 = param < 6000;
+                        isLevel2 = false;
+                        sizeDesc = param + '平方米';
+                        break;
+                    case 'publicHub':
+                        isLevel3 = false;
+                        isLevel2 = false;
+                        sizeDesc = '公交枢纽工程均属大型';
+                        break;
+                    case 'envLandfill':
+                        isLevel3 = param < 200;
+                        isLevel2 = param < 500;
+                        sizeDesc = param + '吨/日';
+                        break;
+                    case 'envCompost':
+                        isLevel3 = param < 300;
+                        isLevel2 = false;
+                        sizeDesc = param + '吨/日';
+                        break;
+                    case 'envTransfer':
+                        isLevel3 = param < 150;
+                        isLevel2 = param < 400;
+                        sizeDesc = param + '吨/日';
+                        break;
+                    case 'envMedical':
+                        isLevel3 = param < 5;
+                        isLevel2 = false;
+                        sizeDesc = param + '吨/日';
+                        break;
+                    default:
+                        isLevel3 = false;
+                        isLevel2 = false;
+                }
+                
+                const largeTypes = ['tunnel', 'publicBRT', 'publicTram', 'publicLane', 'publicHub'];
+                
+                if (largeTypes.includes(mType)) {
+                    level = '甲级资质';
+                    personnel = '市政公用工程相关专业注册执业人员或高级专业技术职称人员';
+                    enterprise = sizeDesc + '，甲级资质可承担各类规模市政工程设计业务。';
+                } else if (isLevel3) {
+                    level = '丙级资质';
+                    personnel = '市政公用工程相关专业注册执业人员或中级及以上专业技术职称人员';
+                    enterprise = '本项目规模为' + sizeDesc + '，属于小型项目，丙级资质可承担小型规模的市政工程设计业务。';
+                } else if (isLevel2) {
+                    level = '乙级资质';
+                    personnel = '市政公用工程相关专业注册执业人员或中级及以上专业技术职称人员';
+                    enterprise = '本项目规模为' + sizeDesc + '，属于中型项目，乙级资质可承担中小型规模的市政工程设计业务。';
+                } else {
+                    level = '甲级资质';
+                    personnel = '市政公用工程相关专业注册执业人员或高级专业技术职称人员';
+                    enterprise = '本项目规模为' + sizeDesc + '，属于大型项目，甲级资质可承担各类规模的市政工程设计业务。';
+                }
+            } else {
+                level = '乙级资质';
+                personnel = '建筑工程相关专业注册执业人员或中级及以上专业技术职称人员';
+                enterprise = '可承担中小型规模的建筑工程设计业务。';
+            }
+            
+            return { level, enterprise, personnel };
+        }
+        
+        function calculateProcurementFlow() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const category = document.getElementById('category').value;
+            const resultSection = document.getElementById('resultSection');
+            const procurementType = document.getElementById('procurementType');
+            const estimatedTime = document.getElementById('estimatedTime');
+            
+            if (isNaN(amount) || amount < 0) {
+                alert('请输入有效的招采金额');
+                return;
+            }
+            
+            let type, time, flowSteps;
+            
+            if (category === 'goods') {
+                if (amount < 10) {
+                    type = '自行采购';
+                    time = '7天（招标公告到开标6天，中标公示1天）';
+                } else if (amount >= 10 && amount < 40) {
+                    type = '询价';
+                    time = '8天（招标公告到开标7天，中标公示1天）';
+                } else if (amount >= 40 && amount < 200) {
+                    type = '竞争性谈判/竞争性磋商';
+                    time = '41天（意向公示30天，招标公告到开标10天，中标公示1天）';
+                } else {
+                    type = '公开招标';
+                    time = '53-63天（招标计划30天，资格预审（如有）10天，招标公告到开标20天，中标公示3天）';
+                }
+            } else if (category === 'service') {
+                if (amount < 10) {
+                    type = '自行采购';
+                    time = '7天（招标公告到开标6天，中标公示1天）';
+                } else if (amount >= 10 && amount < 40) {
+                    type = '询价';
+                    time = '8天（招标公告到开标7天，中标公示1天）';
+                } else if (amount >= 40 && amount < 100) {
+                    type = '竞争性谈判/竞争性磋商';
+                    time = '41天（意向公示30天，招标公告到开标10天，中标公示1天）';
+                } else {
+                    type = '公开招标';
+                    time = '53-63天（招标计划30天，资格预审（如有）10天，招标公告到开标20天，中标公示3天）';
+                }
+                
+                const serviceQualificationCard = document.getElementById('serviceQualificationCard');
+                const serviceType = document.getElementById('serviceType').value;
+                
+                if (serviceType === 'design') {
+                    const designType = document.getElementById('designType').value;
+                    const municipalDesignType = document.getElementById('municipalDesignType').value;
+                    const designParamField = document.getElementById('designParamField');
+                    const designParamField2 = document.getElementById('designParamField2');
+                    
+                    let designParam = 0;
+                    let buildingDesignType = '';
+                    
+                    if (designType === 'building') {
+                        buildingDesignType = document.getElementById('buildingDesignType').value;
+                        
+                        if (buildingDesignType === 'generalComplex') {
+                            const complexDetailType = document.getElementById('complexDetailType').value;
+                            if (!complexDetailType) {
+                                alert('请选择复杂程度明细');
+                                document.getElementById('resultSection').style.display = 'none';
+                                return;
+                            }
+                            buildingDesignType = complexDetailType;
+                        } else {
+                            designParam = parseFloat(document.getElementById('designParam2').value);
+                            if (designParamField2.className.indexOf('hidden') === -1 && isNaN(designParam)) {
+                                alert('请输入工程规模参数');
+                                document.getElementById('resultSection').style.display = 'none';
+                                return;
+                            }
+                        }
+                    } else {
+                        designParam = parseFloat(document.getElementById('designParam').value);
+                        if (designParamField.style.display !== 'none' && isNaN(designParam)) {
+                            alert('请输入工程规模参数');
+                            document.getElementById('resultSection').style.display = 'none';
+                            return;
+                        }
+                    }
+                    
+                    const qualification = calculateDesignQualification(designType, municipalDesignType, designParam || 0, buildingDesignType);
+                    
+                    document.getElementById('serviceQualificationLevel').textContent = qualification.level;
+                    document.getElementById('servicePersonnelRequirement').textContent = qualification.personnel;
+                    document.getElementById('serviceEnterpriseRequirement').textContent = qualification.enterprise;
+                    
+                    serviceQualificationCard.style.display = 'block';
+                } else if (serviceType === 'survey') {
+                    const surveyType = document.getElementById('surveyType').value;
+                    let levelCode = '';
+                    
+                    if (surveyType === 'geotechnical') {
+                        levelCode = document.getElementById('geotechnicalLevel').value;
+                    } else {
+                        levelCode = document.getElementById('surveyingLevel').value;
+                    }
+                    
+                    if (!levelCode) {
+                        alert('请选择项目特征');
+                        document.getElementById('resultSection').style.display = 'none';
+                        return;
+                    }
+                    
+                    const qualification = calculateSurveyQualification(surveyType, levelCode);
+                    
+                    document.getElementById('serviceQualificationLevel').textContent = qualification.level;
+                    document.getElementById('servicePersonnelRequirement').textContent = qualification.personnel;
+                    document.getElementById('serviceEnterpriseRequirement').textContent = qualification.enterprise;
+                    
+                    serviceQualificationCard.style.display = 'block';
+                } else if (serviceType === 'supervision') {
+                    const supervisionCategory = document.getElementById('supervisionCategory').value;
+                    const supervisionProject = document.getElementById('supervisionProject').value;
+                    
+                    if (!supervisionCategory || !supervisionProject) {
+                        alert('请选择工程类别和项目情况');
+                        document.getElementById('resultSection').style.display = 'none';
+                        return;
+                    }
+                    
+                    const projectText = document.getElementById('supervisionProject').options[document.getElementById('supervisionProject').selectedIndex].text;
+                    
+                    let projectLevel = '';
+                    let requiredLevel = '';
+                    let personnel = '';
+                    let enterprise = '';
+                    
+                    const level1Projects = ['b1', 'b4', 'b7', 'm1', 'm4', 'm7', 'm10', 'm13', 'm14'];
+                    const level2Projects = ['b2', 'b5', 'b8', 'm2', 'm5', 'm8', 'm11', 'm15'];
+                    const level3Projects = ['b3', 'b6', 'b9', 'm3', 'm6', 'm9', 'm12', 'm16'];
+                    
+                    if (level1Projects.includes(supervisionProject)) {
+                        projectLevel = '一级项目';
+                        requiredLevel = '甲级资质';
+                        personnel = '';
+                        enterprise = '甲级资质可承担相应专业工程类别建设工程项目的工程监理业务。';
+                    } else if (level2Projects.includes(supervisionProject)) {
+                        projectLevel = '二级项目';
+                        requiredLevel = '乙级资质';
+                        personnel = '';
+                        enterprise = '乙级资质可承担相应专业工程类别二级以下(含二级)建设工程项目的工程监理业务。';
+                    } else if (level3Projects.includes(supervisionProject)) {
+                        projectLevel = '三级项目';
+                        requiredLevel = '乙级资质';
+                        personnel = '';
+                        enterprise = '乙级资质可承担相应专业工程类别二级以下(含二级)建设工程项目的工程监理业务。';
+                    }
+                    
+                    document.getElementById('serviceQualificationLevel').textContent = requiredLevel;
+                    document.getElementById('servicePersonnelRequirement').textContent = personnel;
+                    document.getElementById('serviceEnterpriseRequirement').textContent = '【项目情况】' + projectText + '属于' + projectLevel + '。' + enterprise;
+                    
+                    const personnelItem = document.getElementById('servicePersonnelRequirement').closest('.result-item');
+                    if (!personnel) {
+                        personnelItem.style.display = 'none';
+                    } else {
+                        personnelItem.style.display = 'block';
+                    }
+                    
+                    serviceQualificationCard.style.display = 'block';
+                } else {
+                    serviceQualificationCard.style.display = 'none';
+                }
+            } else {
+                if (amount < 60) {
+                    type = '询价';
+                    time = '8天（招标公告到开标7天，中标公示1天）';
+                } else if (amount >= 60 && amount < 400) {
+                    type = '竞争性谈判/竞争性磋商';
+                    time = '41天（意向公示30天，招标公告到开标10天，中标公示1天）';
+                } else {
+                    type = '公开招标';
+                    time = '53-63天（招标计划30天，资格预审（如有）10天，招标公告到开标20天，中标公示3天）';
+                }
+            }
+            
+            // 根据招标类型设置流程步骤
+            if (type === '小额采购') {
+                flowSteps = [
+                    { title: '需求确认', description: '确认招采需求和预算' },
+                    { title: '招采申请', description: '提交招采申请' },
+                    { title: '审批', description: '部门审批' },
+                    { title: '直接采购', description: '通过协议供应商或直接谈判采购' },
+                    { title: '合同签订', description: '签订招采合同' },
+                    { title: '验收', description: '验收货物、服务或工程' },
+                    { title: '付款', description: '支付招采款项' }
+                ];
+            } else if (type === '竞争性谈判') {
+                flowSteps = [
+                    { title: '需求确认', description: '确认招采需求和预算' },
+                    { title: '招采计划', description: '编制招采计划' },
+                    { title: '发布公告', description: '发布竞争性谈判公告（3个工作日）' },
+                    { title: '响应文件接收', description: '接收供应商响应文件' },
+                    { title: '谈判', description: '组织谈判小组进行谈判' },
+                    { title: '确定成交供应商', description: '根据谈判结果确定成交供应商' },
+                    { title: '公示', description: '公示成交结果（3个工作日）' },
+                    { title: '合同签订', description: '签订招采合同' },
+                    { title: '验收', description: '验收货物、服务或工程' },
+                    { title: '付款', description: '支付招采款项' }
+                ];
+            } else if (type === '竞争性磋商') {
+                flowSteps = [
+                    { title: '需求确认', description: '确认招采需求和预算' },
+                    { title: '招采计划', description: '编制招采计划' },
+                    { title: '发布公告', description: '发布竞争性磋商公告（5个工作日）' },
+                    { title: '响应文件接收', description: '接收供应商响应文件' },
+                    { title: '磋商', description: '组织磋商小组进行磋商' },
+                    { title: '确定成交供应商', description: '根据磋商结果确定成交供应商' },
+                    { title: '公示', description: '公示成交结果（3个工作日）' },
+                    { title: '合同签订', description: '签订招采合同' },
+                    { title: '验收', description: '验收货物、服务或工程' },
+                    { title: '付款', description: '支付招采款项' }
+                ];
+            } else {
+                // 公开招标
+                flowSteps = [
+                    { title: '需求确认', description: '确认招采需求和预算' },
+                    { title: '招采计划', description: '编制招采计划' },
+                    { title: '招标文件编制', description: '编制招标文件' },
+                    { title: '发布招标公告', description: '发布公开招标公告（不少于20日）' },
+                    { title: '资格预审', description: '对供应商进行资格预审（如需要）' },
+                    { title: '投标文件接收', description: '接收供应商投标文件' },
+                    { title: '开标', description: '公开开标' },
+                    { title: '评标', description: '组织评标委员会进行评标' },
+                    { title: '公示', description: '公示中标结果（3个工作日）' },
+                    { title: '合同签订', description: '签订招采合同' },
+                    { title: '验收', description: '验收货物、服务或工程' },
+                    { title: '付款', description: '支付招采款项' }
+                ];
+            }
+            
+            procurementType.textContent = type;
+            estimatedTime.textContent = time;
+            
+            const qualificationCard = document.getElementById('qualificationCard');
+            if (category === 'engineering') {
+                const engineeringType = document.getElementById('engineeringType').value;
+                let buildingHeight = 0, buildingArea = 0, span = 0, projectAmount = amount, municipalType = 'road', municipalParam = 0, heightType = 'building';
+                
+                if (engineeringType === 'construction') {
+                    buildingHeight = parseFloat(document.getElementById('buildingHeight').value) || 0;
+                    buildingArea = parseFloat(document.getElementById('buildingArea').value) || 0;
+                    span = parseFloat(document.getElementById('span').value) || 0;
+                    heightType = document.getElementById('heightType').value || 'building';
+                } else {
+                    municipalType = document.getElementById('municipalType').value || 'road';
+                    const paramField = document.getElementById('municipalParamField');
+                    if (paramField.style.display !== 'none') {
+                        municipalParam = parseFloat(document.getElementById('municipalParam').value) || 0;
+                    } else {
+                        municipalParam = 0;
+                    }
+                }
+                
+                const qualification = calculateQualification(engineeringType, buildingHeight, buildingArea, span, projectAmount, municipalType, municipalParam, heightType);
+                
+                document.getElementById('qualificationLevel').textContent = qualification.level;
+                document.getElementById('projectManagerRequirement').textContent = qualification.manager;
+                document.getElementById('enterpriseRequirement').textContent = qualification.enterprise;
+                
+                qualificationCard.style.display = 'block';
+            } else {
+                qualificationCard.style.display = 'none';
+            }
+            
+            resultSection.style.display = 'block';
+        }
+        
+        window.onload = function() {
+            toggleCategoryFields();
+        };
+    </script>
+</body>
+</html>
