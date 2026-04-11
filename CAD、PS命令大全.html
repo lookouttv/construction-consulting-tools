@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAD & Photoshop 快捷键大全</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+            text-shadow: 0 0 20px rgba(0, 150, 255, 0.5);
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 30px;
+            font-size: 0.9em;
+        }
+        
+        .search-box {
+            margin-bottom: 30px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 25px;
+            font-size: 18px;
+            border: 2px solid #0f3460;
+            border-radius: 50px;
+            background: #0f3460;
+            color: #fff;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .search-box input::placeholder {
+            color: #666;
+        }
+        
+        .search-box input:focus {
+            border-color: #00a8ff;
+            box-shadow: 0 0 20px rgba(0, 168, 255, 0.3);
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 12px 30px;
+            background: #0f3460;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            background: #00a8ff;
+        }
+        
+        .tab:hover:not(.active) {
+            background: #1a4a7a;
+        }
+        
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        .category {
+            background: #0f3460;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .category-title {
+            color: #00a8ff;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #1a4a7a;
+        }
+        
+        .shortcut-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background: #1a1a2e;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: all 0.2s;
+        }
+        
+        .shortcut-item:hover {
+            background: #252545;
+            transform: translateX(5px);
+        }
+        
+        .shortcut-item.hidden {
+            display: none;
+        }
+        
+        .shortcut-name {
+            color: #fff;
+            font-size: 15px;
+        }
+        
+        .shortcut-key {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+        
+        .key {
+            background: linear-gradient(145deg, #2a2a4a, #1a1a3a);
+            color: #00ff88;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: "Consolas", monospace;
+            border: 1px solid #00ff88;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+        }
+        
+        .no-results {
+            text-align: center;
+            color: #666;
+            padding: 40px;
+            font-size: 16px;
+        }
+        
+        .highlight {
+            color: #ffd700;
+        }
+        
+        @media (max-width: 600px) {
+            h1 { font-size: 1.6em; }
+            .tab { padding: 10px 20px; font-size: 14px; }
+            .shortcut-item { flex-direction: column; align-items: flex-start; gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⌨️ CAD & Photoshop 快捷键大全</h1>
+        <p class="subtitle">输入汉字即可搜索对应快捷键</p>
+        
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 搜索功能名称，如：直线、复制、图层...">
+        </div>
+        
+        <div class="tabs">
+            <button class="tab active" data-target="cad">CAD 快捷键</button>
+            <button class="tab" data-target="ps">Photoshop 快捷键</button>
+        </div>
+        
+        <div id="cad" class="section active">
+            <div class="category">
+                <div class="category-title">📐 基础绘图命令</div>
+                <div class="shortcut-list">
+                    <div class="shortcut-item"><span class="shortcut-name">直线</span><div class="shortcut-key"><span class="key">L</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">圆</span><div class="shortcut-key"><span class="key">C</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">圆弧</span><div class="shortcut-key"><span class="key">A</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">矩形</span><div class="shortcut-key"><span class="key">REC</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">多段线</span><div class="shortcut-key"><span class="key">PL</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">正多边形</span><div class="shortcut-key"><span class="key">POL</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">椭圆</span><div class="shortcut-key"><span class="key">EL</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">点</span><div class="shortcut-key"><span class="key">PO</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">图案填充</span><div class="shortcut-key"><span class="key">H</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">构造线</span><div class="shortcut-key"><span class="key">XL</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">多重线</span><div class="shortcut-key"><span class="key">ML</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">创建组</span><div class="shortcut-key"><span class="key">G</span></div></div>
+                </div>
+            </div>
+            
+            <div class="category">
+                <div class="category-title">✏️ 编辑与修改命令</div>
+                <div class="shortcut-list">
+                    <div class="shortcut-item"><span class="shortcut-name">移动</span><div class="shortcut-key"><span class="key">M</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">复制</span><div class="shortcut-key"><span class="key">CO</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">旋转</span><div class="shortcut-key"><span class="key">RO</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">缩放</span><div class="shortcut-key"><span class="key">SC</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">修剪</span><div class="shortcut-key"><span class="key">TR</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">延伸</span><div class="shortcut-key"><span class="key">EX</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">偏移</span><div class="shortcut-key"><span class="key">O</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">镜像</span><div class="shortcut-key"><span class="key">MI</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">阵列</span><div class="shortcut-key"><span class="key">AR</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">删除</span><div class="shortcut-key"><span class="key">E</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">分解</span><div class="shortcut-key"><span class="key">X</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">圆角</span><div class="shortcut-key"><span class="key">F</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">倒角</span><div class="shortcut-key"><span class="key">CHA</span></div></div>
+                </div>
+            </div>
+            
+            <div class="category">
+                <div class="category-title">📁 图层与属性管理</div>
+                <div class="shortcut-list">
+                    <div class="shortcut-item"><span class="shortcut-name">图层管理</span><div class="shortcut-key"><span class="key">LA</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">属性匹配</span><div class="shortcut-key"><span class="key">MA</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">属性面板</span><div class="shortcut-key"><span class="key">CH</span></div></div>
+                </div>
+            </div>
+            
+            <div class="category">
+                <div class="category-title">📏 尺寸标注与文字</div>
+                <div class="shortcut-list">
+                    <div class="shortcut-item"><span class="shortcut-name">线性标注</span><div class="shortcut-key"><span class="key">DLI</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">半径标注</span><div class="shortcut-key"><span class="key">DRA</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">直径标注</span><div class="shortcut-key"><span class="key">DDI</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">角度标注</span><div class="shortcut-key"><span class="key">DAN</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">单行文字</span><div class="shortcut-key"><span class="key">DT</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">多行文字</span><div class="shortcut-key"><span class="key">T</span></div></div>
+                </div>
+            </div>
+            
+            <div class="category">
+                <div class="category-title">🔍 视图控制与辅助工具</div>
+                <div class="shortcut-list">
+                    <div class="shortcut-item"><span class="shortcut-name">缩放视图</span><div class="shortcut-key"><span class="key">Z</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">平移视图</span><div class="shortcut-key"><span class="key">P</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">重生成</span><div class="shortcut-key"><span class="key">RE</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">填充</span><div class="shortcut-key"><span class="key">F</span></div></div>
+                </div>
+            </div>
+            
+            <div class="category">
+                <div class="category-title">⌨️ 功能键</div>
+                <div class="shortcut-list">
+                    <div class="shortcut-item"><span class="shortcut-name">正交开关</span><div class="shortcut-key"><span class="key">F8</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">对象捕捉</span><div class="shortcut-key"><span class="key">F3</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">栅格捕捉</span><div class="shortcut-key"><span class="key">F9</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">极轴追踪</span><div class="shortcut-key"><span class="key">F10</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">对象追踪</span><div class="shortcut-key"><span class="key">F11</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">动态输入</span><div class="shortcut-key"><span class="key">F12</span></div></div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="ps" class="section">
+            <div class="category">
+                <div class="category-title">📂 文件操作</div>
+                <div class="shortcut-list">
+                    <div class="shortcut-item"><span class="shortcut-name">新建文件</span><div class="shortcut-key"><span class="key">Ctrl+N</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">打开文件</span><div class="shortcut-key"><span class="key">Ctrl+O</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">保存</span><div class="shortcut-key"><span class="key">Ctrl+S</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">另存为</span><div class="shortcut-key"><span class="key">Ctrl+Shift+S</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">关闭</span><div class="shortcut-key"><span class="key">Ctrl+W</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">导出</span><div class="shortcut-key"><span class="key">Ctrl+Alt+Shift+W</span></div></div>
+                </div>
+            </div>
+            
+            <div class="category">
+                <div class="category-title">↩️ 撤销与重做</div>
+                <div class="shortcut-list">
+                    <div class="shortcut-item"><span class="shortcut-name">撤销</span><div class="shortcut-key"><span class="key">Ctrl+Z</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">多步撤销</span><div class="shortcut-key"><span class="key">Ctrl+Alt+Z</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">重做</span><div class="shortcut-key"><span class="key">Ctrl+Shift+Z</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">返回初始状态</span><div class="shortcut-key"><span class="key">F12</span></div></div>
+                </div>
+            </div>
+            
+            <div class="category">
+                <div class="category-title">🖼️ 图层控制</div>
+                <div class="shortcut-list">
+                    <div class="shortcut-item"><span class="shortcut-name">新建图层</span><div class="shortcut-key"><span class="key">Ctrl+Shift+N</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">复制图层</span><div class="shortcut-key"><span class="key">Ctrl+J</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">合并可见图层</span><div class="shortcut-key"><span class="key">Ctrl+Shift+E</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">向下合并图层</span><div class="shortcut-key"><span class="key">Ctrl+E</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">图层上移</span><div class="shortcut-key"><span class="key">Ctrl+]</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">图层下移</span><div class="shortcut-key"><span class="key">Ctrl+[</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">图层置于顶层</span><div class="shortcut-key"><span class="key">Ctrl+Shift+]</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">图层置于底层</span><div class="shortcut-key"><span class="key">Ctrl+Shift+[</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">显示/隐藏图层</span><div class="shortcut-key"><span class="key">Alt+点击眼睛</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">图层编组</span><div class="shortcut-key"><span class="key">Ctrl+G</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">取消图层编组</span><div class="shortcut-key"><span class="key">Ctrl+Shift+G</span></div></div>
+                </div>
+            </div>
+            
+            <div class="category">
+                <div class="category-title">🔲 选择与变换</div>
+                <div class="shortcut-list">
+                    <div class="shortcut-item"><span class="shortcut-name">矩形选框工具</span><div class="shortcut-key"><span class="key">M</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">椭圆选框工具</span><div class="shortcut-key"><span class="key">M (Shift+M)</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">套索工具</span><div class="shortcut-key"><span class="key">L</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">多边形套索</span><div class="shortcut-key"><span class="key">L (Shift+L)</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">磁性套索</span><div class="shortcut-key"><span class="key">L (Alt+L)</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">魔棒工具</span><div class="shortcut-key"><span class="key">W</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">快速选择工具</span><div class="shortcut-key"><span class="key">W (Shift+W)</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">全选</span><div class="shortcut-key"><span class="key">Ctrl+A</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">取消选择</span><div class="shortcut-key"><span class="key">Ctrl+D</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">反选</span><div class="shortcut-key"><span class="key">Ctrl+Shift+I</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">自由变换</span><div class="shortcut-key"><span class="key">Ctrl+T</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">再次变换</span><div class="shortcut-key"><span class="key">Ctrl+Shift+T</span></div></div>
+                </div>
+            </div>
+            
+            <div class="category">
+                <div class="category-title">🎨 绘图与修饰</div>
+                <div class="shortcut-list">
+                    <div class="shortcut-item"><span class="shortcut-name">画笔工具</span><div class="shortcut-key"><span class="key">B</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">铅笔工具</span><div class="shortcut-key"><span class="key">B (Shift+B)</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">橡皮擦工具</span><div class="shortcut-key"><span class="key">E</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">背景橡皮擦</span><div class="shortcut-key"><span class="key">E (Shift+E)</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">魔术橡皮擦</span><div class="shortcut-key"><span class="key">E (Alt+E)</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">仿制图章工具</span><div class="shortcut-key"><span class="key">S</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">图案图章工具</span><div class="shortcut-key"><span class="key">S (Shift+S)</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">历史记录画笔</span><div class="shortcut-key"><span class="key">Y</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">模糊工具</span><div class="shortcut-key"><span class="key">R</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">锐化工具</span><div class="shortcut-key"><span class="key">R (Shift+R)</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">涂抹工具</span><div class="shortcut-key"><span class="key">R (Alt+R)</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">减淡工具</span><div class="shortcut-key"><span class="key">O</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">加深工具</span><div class="shortcut-key"><span class="key">O (Shift+O)</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">海绵工具</span><div class="shortcut-key"><span class="key">O (Alt+O)</span></div></div>
+                </div>
+            </div>
+            
+            <div class="category">
+                <div class="category-title">🪣 填充与颜色</div>
+                <div class="shortcut-list">
+                    <div class="shortcut-item"><span class="shortcut-name">填充前景色</span><div class="shortcut-key"><span class="key">Alt+Delete</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">填充背景色</span><div class="shortcut-key"><span class="key">Ctrl+Delete</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">吸管工具</span><div class="shortcut-key"><span class="key">I</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">颜色取样器</span><div class="shortcut-key"><span class="key">I (Shift+I)</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">油漆桶工具</span><div class="shortcut-key"><span class="key">G</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">渐变工具</span><div class="shortcut-key"><span class="key">G (Shift+G)</span></div></div>
+                </div>
+            </div>
+            
+            <div class="category">
+                <div class="category-title">🔤 文字工具</div>
+                <div class="shortcut-list">
+                    <div class="shortcut-item"><span class="shortcut-name">横排文字工具</span><div class="shortcut-key"><span class="key">T</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">直排文字工具</span><div class="shortcut-key"><span class="key">T (Shift+T)</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">文字选区</span><div class="shortcut-key"><span class="key">Ctrl+点击文字图层</span></div></div>
+                </div>
+            </div>
+            
+            <div class="category">
+                <div class="category-title">👁️ 视图与显示</div>
+                <div class="shortcut-list">
+                    <div class="shortcut-item"><span class="shortcut-name">放大</span><div class="shortcut-key"><span class="key">Ctrl++</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">缩小</span><div class="shortcut-key"><span class="key">Ctrl+-</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">实际像素</span><div class="shortcut-key"><span class="key">Ctrl+1</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">适应屏幕</span><div class="shortcut-key"><span class="key">Ctrl+0</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">切换显示模式</span><div class="shortcut-key"><span class="key">F</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">隐藏/显示面板</span><div class="shortcut-key"><span class="key">Tab</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">标尺</span><div class="shortcut-key"><span class="key">Ctrl+R</span></div></div>
+                    <div class="shortcut-item"><span class="shortcut-name">网格</span><div class="shortcut-key"><span class="key">Ctrl+'</span></div></div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="noResults" class="no-results" style="display: none;">
+            未找到匹配的快捷键，请尝试其他关键词
+        </div>
+    </div>
+    
+    <script>
+        const tabs = document.querySelectorAll('.tab');
+        const sections = document.querySelectorAll('.section');
+        const searchInput = document.getElementById('searchInput');
+        const noResults = document.getElementById('noResults');
+        
+        let currentSection = 'cad';
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.target).classList.add('active');
+                currentSection = tab.dataset.target;
+                
+                searchInput.value = '';
+                filterShortcuts('');
+            });
+        });
+        
+        function filterShortcuts(query) {
+            const currentSectionEl = document.getElementById(currentSection);
+            const items = currentSectionEl.querySelectorAll('.shortcut-item');
+            const categories = currentSectionEl.querySelectorAll('.category');
+            
+            let hasResults = false;
+            
+            items.forEach(item => {
+                const name = item.querySelector('.shortcut-name').textContent.toLowerCase();
+                const key = item.querySelector('.shortcut-key').textContent.toLowerCase();
+                
+                if (name.includes(query) || key.includes(query)) {
+                    item.classList.remove('hidden');
+                    hasResults = true;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+            
+            categories.forEach(cat => {
+                const visibleItems = cat.querySelectorAll('.shortcut-item:not(.hidden)');
+                cat.style.display = visibleItems.length > 0 ? 'block' : 'none';
+            });
+            
+            if (!query) {
+                noResults.style.display = 'none';
+            } else {
+                noResults.style.display = hasResults ? 'none' : 'block';
+            }
+        }
+        
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            filterShortcuts(query);
+        });
+    </script>
+</body>
+</html>
