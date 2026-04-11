@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人民币小写转大写</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .result-group {
+            margin-top: 24px;
+            position: relative;
+        }
+        .result-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .result-input {
+            background: #f5f5f5;
+            color: #333;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            padding: 20px;
+        }
+        .copy-btn {
+            width: auto;
+            padding: 8px 16px;
+            font-size: 14px;
+            background: #4CAF50;
+        }
+        .copy-btn:hover {
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+        }
+        .copy-btn.copied {
+            background: #45a049;
+        }
+        .tips {
+            margin-top: 20px;
+            padding: 12px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #666;
+        }
+        .error {
+            color: #f44336;
+            font-size: 14px;
+            margin-top: 8px;
+            display: none;
+        }
+        .error.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>人民币小写转大写</h1>
+        
+        <div class="input-group">
+            <label for="numberInput">请输入金额数字（元）</label>
+            <input type="text" id="numberInput" placeholder="例如：123.45">
+        </div>
+        
+        <button onclick="convert()">转换为大写</button>
+        
+        <div class="result-group">
+            <div class="result-label">
+                <label>转换结果</label>
+                <button class="copy-btn" onclick="copyResult()" id="copyBtn">复制结果</button>
+            </div>
+            <input type="text" id="upperInput" class="result-input" readonly placeholder="零元整">
+            <div class="error" id="error"></div>
+        </div>
+        
+
+        <div class="tips">
+            <strong>示例：</strong>13000011003 → 壹佰叁拾亿零壹万零叁 | 13100313000 → 壹佰叁拾壹亿零叁拾壹万叁仟<br>
+            <strong>说明：</strong>小数点后保留两位；连续多个零只保留一个
+        </div>
+    </div>
+
+    <script>
+        const digits = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
+        const units = ['', '拾', '佰', '仟'];
+        const sections = ['', '万', '亿', '万亿', '兆'];
+
+        function convert() {
+            const input = document.getElementById('numberInput').value.trim();
+            const errorEl = document.getElementById('error');
+            const resultEl = document.getElementById('upperInput');
+            
+            errorEl.classList.remove('show');
+            errorEl.textContent = '';
+            
+            if (!input) {
+                resultEl.value = '';
+                return;
+            }
+
+            const num = parseFloat(input);
+            if (isNaN(num)) {
+                errorEl.textContent = '请输入有效的数字';
+                errorEl.classList.add('show');
+                resultEl.value = '';
+                return;
+            }
+
+            if (num < 0) {
+                errorEl.textContent = '金额不能为负数';
+                errorEl.classList.add('show');
+                resultEl.value = '';
+                return;
+            }
+
+            if (num > 999999999999999) {
+                errorEl.textContent = '金额超出范围';
+                errorEl.classList.add('show');
+                resultEl.value = '';
+                return;
+            }
+
+            try {
+                const result = numberToChinese(num);
+                resultEl.value = result;
+            } catch (e) {
+                errorEl.textContent = e.message;
+                errorEl.classList.add('show');
+                resultEl.value = '';
+            }
+        }
+
+        function numberToChinese(num) {
+            if (num === 0) return '零元整';
+
+            const parts = num.toString().split('.');
+            let integerPart = parts[0];
+            let decimalPart = parts[1] || '';
+
+            while (decimalPart.length < 2) {
+                decimalPart += '0';
+            }
+            if (decimalPart.length > 2) {
+                decimalPart = decimalPart.substring(0, 2);
+            }
+
+            let result = '';
+
+            if (integerPart !== '0' && integerPart !== '') {
+                const integerStr = convertInteger(integerPart);
+                const isPureUnit = /^([万亿兆]+)$/.test(integerStr);
+                if (!isPureUnit) {
+                    result += integerStr + '元';
+                } else {
+                    result += integerStr;
+                }
+            }
+
+            if (decimalPart === '00') {
+                result += '整';
+            } else {
+                const jiao = parseInt(decimalPart[0]);
+                const fen = parseInt(decimalPart[1]);
+
+                if (jiao === 0) {
+                    if (fen !== 0) {
+                        result += '零' + digits[fen] + '分';
+                    }
+                } else {
+                    result += digits[jiao] + '角';
+                    if (fen !== 0) {
+                        result += digits[fen] + '分';
+                    } else {
+                        result += '整';
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        function convertInteger(numStr) {
+            if (numStr === '0') return '零';
+            
+            const digits = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
+            const units = ['', '拾', '佰', '仟'];
+            const sectionNames = ['', '万', '亿', '万亿'];
+            
+            let result = '';
+            
+            // Pad with leading zeros to make length a multiple of 4
+            while (numStr.length % 4 !== 0) {
+                numStr = '0' + numStr;
+            }
+            
+            const sectionCount = numStr.length / 4;
+            
+            for (let i = 0; i < sectionCount; i++) {
+                let section = numStr.substring(i * 4, (i + 1) * 4);
+                let sectionText = '';
+                let hasZero = false;
+                let lastNonZeroUnit = -1;
+                
+                // Convert each digit in section
+                for (let j = 0; j < 4; j++) {
+                    let digit = parseInt(section[j]);
+                    let unit = 3 - j;
+                    
+                    if (digit !== 0) {
+                        if (hasZero && lastNonZeroUnit - unit > 1) {
+                            sectionText += '零';
+                        }
+                        sectionText += digits[digit] + units[unit];
+                        hasZero = false;
+                        lastNonZeroUnit = unit;
+                    } else {
+                        hasZero = true;
+                    }
+                }
+                
+                // Remove trailing zeros
+                sectionText = sectionText.replace(/零+$/, '');
+                
+                // Add section to result
+                if (sectionText !== '') {
+                    // If first section and is 1, skip the digit for 拾/佰/仟
+                    if (i > 0 && sectionText === '壹') {
+                        sectionText = '';
+                    }
+                    result += sectionText + sectionNames[sectionCount - 1 - i];
+                }
+            }
+            
+            // Clean up multiple zeros
+            result = result.replace(/零+/g, '零');
+            result = result.replace(/^零+/, '');
+            result = result.replace(/零+$/, '');
+            
+            return result;
+        }
+
+        function copyResult() {
+            const resultEl = document.getElementById('upperInput');
+            const copyBtn = document.getElementById('copyBtn');
+            
+            if (!resultEl.value) return;
+            
+            navigator.clipboard.writeText(resultEl.value).then(() => {
+                copyBtn.textContent = '已复制!';
+                copyBtn.classList.add('copied');
+                
+                setTimeout(() => {
+                    copyBtn.textContent = '复制结果';
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        document.getElementById('numberInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                convert();
+            }
+        });
+    </script>
+</body>
+</html>
