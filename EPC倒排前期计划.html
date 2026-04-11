@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPC项目前期流程倒排计划</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Microsoft YaHei", "Segoe UI", sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            color: #fff;
+            padding: 30px 0;
+        }
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header p {
+            color: #8892b0;
+            font-size: 1.1em;
+        }
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .input-group label {
+            color: #ccd6f6;
+            font-size: 1.2em;
+        }
+        .input-group input {
+            padding: 12px 20px;
+            font-size: 1.1em;
+            border: 2px solid #00d9ff;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            width: 250px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .input-group input:focus {
+            border-color: #00ff88;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+        .input-group button {
+            padding: 12px 40px;
+            font-size: 1.1em;
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            border: none;
+            border-radius: 8px;
+            color: #1a1a2e;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .input-group button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.4);
+        }
+        .remark {
+            text-align: center;
+            color: #ffa500;
+            margin-top: 20px;
+            font-size: 0.95em;
+            padding: 15px;
+            background: rgba(255, 165, 0, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 165, 0, 0.3);
+        }
+        .summary {
+            text-align: center;
+            color: #00ff88;
+            margin-top: 20px;
+            font-size: 1.2em;
+            display: none;
+        }
+        .table-section {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: none;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #ccd6f6;
+        }
+        th {
+            background: linear-gradient(90deg, rgba(0, 217, 255, 0.2), rgba(0, 255, 136, 0.2));
+            padding: 15px 10px;
+            text-align: center;
+            font-weight: 600;
+            color: #fff;
+            border-bottom: 2px solid #00d9ff;
+        }
+        td {
+            padding: 14px 10px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+        tr:hover td {
+            background: rgba(0, 217, 255, 0.1);
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .step-num {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00d9ff, #00ff88);
+            color: #1a1a2e;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        .step-1 { color: #ff6b6b; }
+        .step-2 { color: #ffa500; }
+        .step-3 { color: #ffd93d; }
+        .step-4 { color: #6bcb77; }
+        .step-5 { color: #4d96ff; }
+        .step-6 { color: #9b59b6; }
+        .step-7 { color: #e91e63; }
+        .step-8 { color: #00bcd4; }
+        .step-9 { color: #8bc34a; }
+        .step-10 { color: #00ff88; font-weight: bold; }
+        .duration {
+            color: #ffa500;
+            font-weight: 500;
+        }
+        .date-cell {
+            font-weight: 600;
+            color: #00ff88;
+        }
+        .days-cell {
+            color: #8892b0;
+        }
+        .critical-path {
+            background: rgba(255, 107, 107, 0.15) !important;
+        }
+        .critical-path td {
+            border-bottom: 1px solid rgba(255, 107, 107, 0.3);
+        }
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.6em;
+            }
+            .input-group {
+                flex-direction: column;
+            }
+            .input-group input {
+                width: 100%;
+            }
+            table {
+                font-size: 0.85em;
+            }
+            th, td {
+                padding: 10px 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 EPC项目前期流程倒排时间计划</h1>
+            <p>从开工日期向前倒推，确定每一步的最迟完成时间</p>
+        </div>
+        
+        <div class="input-section">
+            <div class="input-group">
+                <label for="startDate">🎯 请输入计划开工日期：</label>
+                <input type="date" id="startDate">
+                <button onclick="calculateSchedule()">生成倒排计划</button>
+            </div>
+            <div class="summary" id="summary"></div>
+        </div>
+        
+        <div class="table-section" id="tableSection">
+            <table>
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>步骤</th>
+                        <th>工作内容</th>
+                        <th>工期(天)</th>
+                        <th>最迟完成日期</th>
+                        <th>距开工(天)</th>
+                    </tr>
+                </thead>
+                <tbody id="scheduleBody">
+                </tbody>
+            </table>
+            <div class="remark">
+                ⚠️ <strong>备注：</strong>上述工期仅供核验，需结合实际办理情况梳理调整
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const scheduleData = [
+            { step: 10, name: "项目开工", content: "开工", duration: 1, isStart: true },
+            { step: 9, name: "EPC招标及合同签订", content: "完成工程总承包单位招标及合同签订、同步办理工程规划许可证手续（如有）、办理施工许可（如有）及安全质量报监手续", duration: 30 },
+            { step: 8, name: "初设批复及EPC招标", content: "向发改局申报初步设计文本并取得批复，同步发布工程总承包招标意向公示及完成招标文件编制、清单控制价编制财政局审核", duration: 30 },
+            { step: 7, name: "勘察初设招标", content: "完成勘察和初步设计单位招标及合同签订，同步完成初设编制", duration: 30 },
+            { step: 6, name: "代建招标+初设", content: "完成代建单位招标及合同签订，同步进行初设编制", duration: 28 },
+            { step: 5, name: "绩效评估批复", content: "取得事前绩效评估批复，同步完成代建、勘察、初设采购意向公示", duration: 30 },
+            { step: 4, name: "可研批复", content: "向发改局申报可行性研究并取得批复，同步完成事前绩效评估报告编制、自规局办理选址用地预审", duration: 30 },
+            { step: 3, name: "修规批复+可研", content: "取得修规批复，同步完成可研编制", duration: 20 },
+            { step: 2, name: "修规可研招标", content: "完成修规编制、可研编制单位招标及合同签订", duration: 7 },
+            { step: 1, name: "前期采购", content: "比选确定招标代理单位，进行修规编制单位采购意向公示、申请虚拟指标，同步完成招标文件编制及修规编制工作、权属调查工作（如有）", duration: 20 }
+        ];
+
+        function calculateSchedule() {
+            const startDateInput = document.getElementById('startDate').value;
+            if (!startDateInput) {
+                alert("请输入计划开工日期！");
+                return;
+            }
+
+            const startDate = new Date(startDateInput);
+            const tbody = document.getElementById('scheduleBody');
+            tbody.innerHTML = '';
+
+            let accumulatedDays = 0;
+            const results = [];
+
+            for (let i = 0; i < scheduleData.length; i++) {
+                const item = scheduleData[i];
+                accumulatedDays += item.duration;
+                
+                const deadline = new Date(startDate);
+                deadline.setDate(deadline.getDate() - accumulatedDays);
+                
+                const deadlineStr = formatDate(deadline);
+                const daysFromStart = accumulatedDays;
+
+                results.push({
+                    step: item.step,
+                    name: item.name,
+                    content: item.content,
+                    duration: item.duration,
+                    deadlineStr: deadlineStr,
+                    daysFromStart: daysFromStart,
+                    isStart: item.isStart
+                });
+            }
+
+            results.reverse();
+
+            for (const item of results) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><span class="step-num">${item.step}</span></td>
+                    <td><strong class="step-${item.step}">${item.name}</strong></td>
+                    <td style="text-align:left;">${item.content}</td>
+                    <td class="duration">${item.duration}</td>
+                    <td class="date-cell">${item.deadlineStr}</td>
+                    <td class="days-cell">${item.isStart ? '0' : item.daysFromStart}天</td>
+                `;
+                tbody.appendChild(row);
+            }
+
+            const totalDays = accumulatedDays;
+            const totalWorkDays = totalDays;
+            const summaryText = `📌 开工日期：${formatDate(startDate)} | 总工期：${totalWorkDays}天 | 首步最迟开始：${formatDate(new Date(startDate.getTime() - totalDays * 24 * 60 * 60 * 1000))}`;
+            
+            const summary = document.getElementById('summary');
+            summary.textContent = summaryText;
+            summary.style.display = 'block';
+
+            document.getElementById('tableSection').style.display = 'block';
+        }
+
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        document.getElementById('startDate').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculateSchedule();
+            }
+        });
+    </script>
+</body>
+</html>
