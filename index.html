@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>建设工程咨询管理工具</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #667eea 100%);
+            padding: 30px 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: white;
+            font-size: 38px;
+            font-weight: 800;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
+        }
+        .header p {
+            color: rgba(255,255,255,0.85);
+            margin-top: 12px;
+            font-size: 17px;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.15);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 25px;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            border: none;
+        }
+        .back-btn:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateX(-5px);
+        }
+        .home-page {
+            display: block;
+        }
+        .home-page.hidden {
+            display: none;
+        }
+        .tool-page {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            min-height: calc(100vh - 180px);
+            overflow: hidden;
+        }
+        .tool-page.active {
+            display: block;
+        }
+        .tool-page iframe {
+            width: 100%;
+            height: calc(100vh - 180px);
+            border: none;
+        }
+        .tool-page .tool-header {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #1e3c72, #667eea);
+            color: white;
+        }
+        .tool-page .tool-header h2 {
+            flex: 1;
+            font-size: 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        @media (max-width: 900px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border-radius: 20px;
+            padding: 35px 25px;
+            text-align: center;
+            color: #333;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #1e3c72, #667eea, #764ba2);
+        }
+        .card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(102,126,234,0.05) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        .card:hover:not(.disabled) {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 60px rgba(102,126,234,0.25);
+        }
+        .card .icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 22px;
+            background: linear-gradient(135deg, #1e3c72 0%, #667eea 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            box-shadow: 0 8px 25px rgba(30,60,114,0.3);
+            transition: transform 0.3s;
+        }
+        .card:hover:not(.disabled) .icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        .card h2 {
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #1e3c72;
+            letter-spacing: 0.5px;
+        }
+        .card p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.7;
+        }
+        .card.disabled {
+            background: linear-gradient(145deg, #f0f0f0, #e8e8e8);
+        }
+        .card.disabled::before {
+            background: linear-gradient(90deg, #999, #bbb);
+        }
+        .card.disabled .icon {
+            background: linear-gradient(135deg, #999 0%, #777 100%);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .card.disabled h2 {
+            color: #888;
+        }
+        .card.disabled p {
+            color: #aaa;
+        }
+        .card.disabled::after {
+            display: none;
+        }
+        .develop-page {
+            display: none;
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .develop-page.active {
+            display: block;
+        }
+        .develop-page .icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 56px;
+            box-shadow: 0 15px 40px rgba(255,152,0,0.3);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .develop-page h2 {
+            font-size: 28px;
+            color: #1e3c72;
+            margin-bottom: 15px;
+        }
+        .develop-page p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.8;
+        }
+        .develop-page .tip {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fff8e1;
+            border-radius: 12px;
+            color: #f57c00;
+            font-size: 14px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>建设工程咨询管理工具</h1>
+        <p>为您提供科学、便捷的咨询管理工具</p>
+    </div>
+
+    <div id="homePage" class="home-page grid">
+        <div class="card" onclick="openTool('招采流程建议.html', '招采流程建议')">
+            <div class="icon">📋</div>
+            <h2>招采流程建议</h2>
+            <p>招标采购流程参考<br>规范操作建议</p>
+        </div>
+
+        <div class="card" onclick="openTool('人民币转换器.html', '人民币转换器')">
+            <div class="icon">💰</div>
+            <h2>人民币转换器</h2>
+            <p>将小写金额转换为中文大写<br>支持精确到分的转换</p>
+        </div>
+
+        <div class="card" onclick="openTool('全过程咨询费用计算器(2).html', '全过程咨询费用计算器')">
+            <div class="icon">📊</div>
+            <h2>全过程咨询费用计算器</h2>
+            <p>计算全过程工程咨询<br>服务费用</p>
+        </div>
+
+        <div class="card" onclick="openTool('CAD、PS命令大全.html', 'CAD、PS命令大全')">
+            <div class="icon">🎨</div>
+            <h2>CAD、PS命令大全</h2>
+            <p>CAD与Photoshop常用命令<br>快速查询提升效率</p>
+        </div>
+
+        <div class="card" onclick="openTool('EPC倒排前期计划.html', 'EPC倒排前期计划')">
+            <div class="icon">📑</div>
+            <h2>EPC倒排前期计划</h2>
+            <p>EPC项目倒排前期计划<br>科学安排工程节点</p>
+        </div>
+
+        <div class="card" onclick="openTool('施工标准与图集.html', '施工标准与图集')">
+            <div class="icon">📚</div>
+            <h2>施工标准与图集</h2>
+            <p>施工规范标准图集<br>快速查阅参考</p>
+        </div>
+
+        <div class="card" onclick="openTool('工期转换计算器.html', '工期转换计算器')">
+            <div class="icon">📅</div>
+            <h2>工期转换计算器</h2>
+            <p>日期与工期相互转换<br>快速计算工程进度</p>
+        </div>
+
+        <div class="card" onclick="openTool('建设工程AI智慧检查.html', 'AI智能检查现场安全、文明、质量情况')">
+            <div class="icon">🔍</div>
+            <h2>AI智能检查现场安全、文明、质量情况</h2>
+            <p>AI智能检查工程现场<br>自动识别潜在问题</p>
+        </div>
+
+        <div class="card disabled" onclick="openDevelop()">
+            <div class="icon">⚙️</div>
+            <h2>正在开发</h2>
+            <p>更多功能正在陆续开发中<br>敬请期待...</p>
+        </div>
+    </div>
+
+    <div id="toolPage" class="tool-page">
+        <div class="tool-header">
+            <button class="back-btn" onclick="goHome()">← 返回首页</button>
+            <h2 id="toolTitle">工具名称</h2>
+        </div>
+        <iframe id="toolFrame" src=""></iframe>
+    </div>
+
+    <div id="developPage" class="develop-page">
+        <div class="icon">⚙️</div>
+        <h2>正在开发中</h2>
+        <p>更多功能正在紧锣密鼓地开发中，<br>敬请期待...</p>
+        <div class="tip">
+            💡 关注我们，获取最新功能更新
+        </div>
+        <button class="back-btn" style="margin-top: 30px;" onclick="goHome()">
+            ← 返回首页
+        </button>
+    </div>
+
+    <div class="footer">
+        武汉市政院工程建设咨询事业部（宏建公司）
+    </div>
+
+    <script>
+        function openTool(url, title) {
+            document.getElementById('homePage').classList.add('hidden');
+            document.getElementById('toolPage').classList.add('active');
+            document.getElementById('toolTitle').textContent = title;
+            document.getElementById('toolFrame').src = url;
+            window.scrollTo(0, 0);
+        }
+
+        function openDevelop() {
+            document.getElementById('homePage').classList.add('hidden');
+            document.getElementById('developPage').classList.add('active');
+        }
+
+        function goHome() {
+            document.getElementById('homePage').classList.remove('hidden');
+            document.getElementById('toolPage').classList.remove('active');
+            document.getElementById('developPage').classList.remove('active');
+            document.getElementById('toolFrame').src = '';
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
