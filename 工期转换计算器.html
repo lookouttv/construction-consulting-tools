@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工期转换计算器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+            background-color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1e293b;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 24px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 14px;
+            color: #64748b;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+            background: none;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+        }
+
+        .tab:hover {
+            color: #2563eb;
+        }
+
+        .tab.active {
+            color: #2563eb;
+            border-bottom-color: #2563eb;
+        }
+
+        .form-container {
+            display: none;
+        }
+
+        .form-container.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group > label {
+            display: block;
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group input {
+            flex: 1;
+            height: 44px;
+            padding: 0 16px;
+            font-size: 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus {
+            border-color: #2563eb;
+        }
+
+        .duration-inputs {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .duration-inputs input {
+            width: 70px;
+            text-align: center;
+            padding: 0 8px;
+        }
+
+        .duration-unit {
+            font-size: 14px;
+            color: #64748b;
+            white-space: nowrap;
+        }
+
+        .btn {
+            width: 100%;
+            height: 48px;
+            background-color: #2563eb;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-top: 8px;
+        }
+
+        .btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        .result {
+            margin-top: 24px;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+        }
+
+        .result.success {
+            display: block;
+            background-color: #ecfdf5;
+            color: #10b981;
+            border: 1px solid #10b981;
+        }
+
+        .result.error {
+            display: block;
+            background-color: #fef2f2;
+            color: #ef4444;
+            border: 1px solid #ef4444;
+        }
+
+        .footer {
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 12px;
+            color: #64748b;
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 16px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .tab {
+                font-size: 12px;
+                padding: 10px 4px;
+            }
+
+            .duration-inputs input {
+                width: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>工期转换计算器</h1>
+
+        <div class="tabs">
+            <button class="tab active" data-tab="tab1">工期推算竣工</button>
+            <button class="tab" data-tab="tab2">竣工反推开工</button>
+            <button class="tab" data-tab="tab3">计算总工期</button>
+        </div>
+
+        <div id="tab1" class="form-container active">
+            <div class="form-group">
+                <label>开工日期</label>
+                <div class="input-wrapper">
+                    <input type="date" id="startDate1" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>工期</label>
+                <div class="input-wrapper">
+                    <input type="number" id="duration1" min="1" placeholder="请输入工期天数" required>
+                    <span class="duration-unit">天</span>
+                </div>
+            </div>
+            <button class="btn" onclick="calculateEndDate()">计算竣工日期</button>
+            <div id="result1" class="result"></div>
+        </div>
+
+        <div id="tab2" class="form-container">
+            <div class="form-group">
+                <label>竣工日期</label>
+                <div class="input-wrapper">
+                    <input type="date" id="endDate2" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>工期</label>
+                <div class="input-wrapper">
+                    <input type="number" id="duration2" min="1" placeholder="请输入工期天数" required>
+                    <span class="duration-unit">天</span>
+                </div>
+            </div>
+            <button class="btn" onclick="calculateStartDate()">计算开工日期</button>
+            <div id="result2" class="result"></div>
+        </div>
+
+        <div id="tab3" class="form-container">
+            <div class="form-group">
+                <label>开工日期</label>
+                <div class="input-wrapper">
+                    <input type="date" id="startDate3" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>竣工日期</label>
+                <div class="input-wrapper">
+                    <input type="date" id="endDate3" required>
+                </div>
+            </div>
+            <button class="btn" onclick="calculateTotalDuration()">计算总工期</button>
+            <div id="result3" class="result"></div>
+        </div>
+
+        <div class="footer">
+            说明：总工期计算包含开工日和竣工日
+        </div>
+    </div>
+
+    <script>
+        const tabs = document.querySelectorAll('.tab');
+        const formContainers = document.querySelectorAll('.form-container');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                formContainers.forEach(c => c.classList.remove('active'));
+                
+                tab.classList.add('active');
+                const targetId = tab.getAttribute('data-tab');
+                document.getElementById(targetId).classList.add('active');
+                
+                clearResults();
+            });
+        });
+
+        function clearResults() {
+            document.querySelectorAll('.result').forEach(r => {
+                r.className = 'result';
+                r.textContent = '';
+            });
+        }
+
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}年${month}月${day}日`;
+        }
+
+        function calculateEndDate() {
+            const startDateStr = document.getElementById('startDate1').value;
+            const duration = parseInt(document.getElementById('duration1').value);
+            const resultDiv = document.getElementById('result1');
+
+            if (!startDateStr) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '请选择开工日期';
+                return;
+            }
+
+            if (!duration || duration < 1) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '请输入有效的工期天数（至少1天）';
+                return;
+            }
+
+            const startDate = new Date(startDateStr);
+            const endDate = new Date(startDate);
+            endDate.setDate(endDate.getDate() + duration - 1);
+
+            resultDiv.className = 'result success';
+            resultDiv.textContent = `竣工日期：${formatDate(endDate)}`;
+        }
+
+        function calculateStartDate() {
+            const endDateStr = document.getElementById('endDate2').value;
+            const duration = parseInt(document.getElementById('duration2').value);
+            const resultDiv = document.getElementById('result2');
+
+            if (!endDateStr) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '请选择竣工日期';
+                return;
+            }
+
+            if (!duration || duration < 1) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '请输入有效的工期天数（至少1天）';
+                return;
+            }
+
+            const endDate = new Date(endDateStr);
+            const startDate = new Date(endDate);
+            startDate.setDate(startDate.getDate() - duration + 1);
+
+            resultDiv.className = 'result success';
+            resultDiv.textContent = `开工日期：${formatDate(startDate)}`;
+        }
+
+        function calculateTotalDuration() {
+            const startDateStr = document.getElementById('startDate3').value;
+            const endDateStr = document.getElementById('endDate3').value;
+            const resultDiv = document.getElementById('result3');
+
+            if (!startDateStr) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '请选择开工日期';
+                return;
+            }
+
+            if (!endDateStr) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '请选择竣工日期';
+                return;
+            }
+
+            const startDate = new Date(startDateStr);
+            const endDate = new Date(endDateStr);
+
+            if (endDate < startDate) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '竣工日期不能早于开工日期';
+                return;
+            }
+
+            const diffTime = endDate.getTime() - startDate.getTime();
+            const totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+            resultDiv.className = 'result success';
+            resultDiv.textContent = `总工期：${totalDays} 天`;
+        }
+    </script>
+</body>
+</html>
