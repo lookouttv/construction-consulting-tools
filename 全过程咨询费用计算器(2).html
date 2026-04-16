@@ -1541,12 +1541,12 @@
             updateSummary();
         }
 
-        function calculateCapitalFee() {
+        函数 计算资本费() {
             const cost = parseFloat(document.getElementById('capitalCost').value) || 0;
             let fee = 0;
             let detail = '';
             
-            如果 (成本 <= 30) 费用 = 数学.最大值(成本 * 0.005, 0.2);
+            如果 (成本 <= 30) 费用 = Math.max(成本 * 0.005, 0.2);
             否则 如果 (费用 <= 100) 手续费 = 0.15 + (费用 - 30) * 0.003;
             否则 如果 (费用 <= 300) 手续费 = 0.36 + (费用 - 100) * 0.0007;
             否则 如果 (费用 <= 500) 手续费 = 0.5 + (费用 - 300) * 0.0003;
@@ -1562,4 +1562,6 @@
     </script>
 </body>
 </html>
+
+
 
