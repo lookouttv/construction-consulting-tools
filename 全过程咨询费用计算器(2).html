@@ -1167,7 +1167,7 @@
             'bill': { name: '工程清单编制或审核', rates: [{limit: 500, rate: 0.0045}, {limit: 3000, rate: 0.0035}, {limit: 6000, rate: 0.0025}, {limit: 10000, rate: 0.0012}, {limit: Infinity, rate: 0.0005}], minFee: 0.3, hasReduce: false },
             'control': { name: '控制价编制', rates: [{limit: 500, rate: 0.0035}, {limit: 3000, rate: 0.0023}, {limit: 6000, rate: 0.0012}, {limit: 10000, rate: 0.0008}, {limit: Infinity, rate: 0.0005}], minFee: 0.3, hasReduce: false },
             'audit': { name: '工程结算审核', rates: [{limit: 500, rate: 0.005}, {limit: 3000, rate: 0.004}, {limit: 6000, rate: 0.0015}, {limit: 10000, rate: 0.0008}, {limit: Infinity, rate: 0.0003}], minFee: 0.3, hasReduce: true },
-            'whole': { name: '施工阶段全过程造价控制', rates: [{limit: 500, rate: 0.12}, {limit: 3000, rate: 0.09}, {limit: 6000, rate: 0.075}, {limit: 10000, rate: 0.06}, {limit: Infinity, rate: 0.04}], minFee: 0.3, hasReduce: false },
+            'whole': { name: '施工阶段全过程造价控制', rates: [{limit: 500, rate: 0.012}, {limit: 3000, rate: 0.009}, {limit: 6000, rate: 0.0075}, {limit: 10000, rate: 0.006}, {limit: Infinity, rate: 0.004}], minFee: 0.3, hasReduce: false },
             'final': { name: '竣工决算编制或审核', rates: [{limit: Infinity, rate: 0.003}], minFee: 0.3, hasReduce: false },
             'budget': { name: '工程预算编制', rates: [{limit: 500, rate: 0.005}, {limit: 3000, rate: 0.004}, {limit: 6000, rate: 0.0015}, {limit: 10000, rate: 0.0005}, {limit: Infinity, rate: 0.0002}], minFee: 0.3, hasReduce: false }
         };
@@ -1241,7 +1241,7 @@
                     fee += partFee;
                     
                     if (amountInRange > 0) {
-                        itemDetail += `<div class="step"><span class="step-title">第${i+1}档：${prevLimit}-${config.rates[i].limit === Infinity ? '∞' : config.rates[i].limit}万元</span><br>费率：${(config.rates[i].rate * 100).toFixed(2)}‰<br>计算：${formatNum(amountInRange)} × ${(config.rates[i].rate * 100).toFixed(2)}‰ = ${formatNum(partFee)} 万元</div>`;
+                        itemDetail += `<div class="step"><span class="step-title">第${i+1}档：${prevLimit}-${config.rates[i].limit === Infinity ? '∞' : config.rates[i].limit}万元</span><br>费率：${(config.rates[i].rate * 1000).toFixed(1)}‰<br>计算：${formatNum(amountInRange)} × ${(config.rates[i].rate * 1000).toFixed(1)}‰ = ${formatNum(partFee)} 万元</div>`;
                     }
                     remaining -= amountInRange;
                     prevLimit = config.rates[i].limit;
