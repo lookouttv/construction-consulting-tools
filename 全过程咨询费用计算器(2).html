@@ -59,6 +59,106 @@
         .tab-btn.active { background: #1890ff; color: white; border-color: #1890ff; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
+        /* ===== 费用分类搜索与二级标题导航 ===== */
+        .fee-toolbar {
+            background: #fff;
+            border-radius: 12px;
+            padding: 16px 18px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .search-box {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        #feeSearch {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #1890ff;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all .3s;
+        }
+        #feeSearch:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(24,144,255,0.15);
+        }
+        .search-clear {
+            padding: 10px 18px;
+            border: none;
+            background: #ff4d4f;
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        .search-clear:hover { background: #ff7875; }
+        .nav-hint {
+            font-size: 13px;
+            color: #888;
+            margin: 12px 0 4px;
+        }
+        .cat-nav {
+            margin-top: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .cat-group-title {
+            font-weight: 700;
+            color: #096dd9;
+            font-size: 14px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+        }
+        .cat-group-title::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 16px;
+            background: #1890ff;
+            margin-right: 8px;
+            border-radius: 2px;
+        }
+        .cat-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .cat-chip {
+            padding: 6px 12px;
+            border: 1px solid #d9d9d9;
+            background: #fafafa;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all .2s;
+            color: #444;
+        }
+        .cat-chip:hover {
+            border-color: #1890ff;
+            color: #1890ff;
+            background: #e6f7ff;
+        }
+        .search-info {
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: #e6f7ff;
+            border: 1px solid #91d5ff;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #096dd9;
+        }
+        body.searching .tab-content { display: block !important; }
+        body.searching .tab-content.fee-hidden { display: none !important; }
+        .fee-hidden { display: none !important; }
+        .fee-flash {
+            box-shadow: 0 0 0 3px #ffd666, 0 6px 16px rgba(0,0,0,0.12) !important;
+            border-color: #faad14 !important;
+        }
         @media (max-width: 768px) { .row { flex-direction: column; } .calculator-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
@@ -69,11 +169,21 @@
             <p>武汉市政院工程建设咨询事业部（宏建公司）</p>
         </div>
         
-        <div class="tabs">
-            <button class="tab-btn active" onclick="showTab('investment')">Ⅰ、前期咨询</button>
-            <button class="tab-btn" onclick="showTab('design')">Ⅱ、勘察设计</button>
-            <button class="tab-btn" onclick="showTab('construction')">Ⅲ、建设管理</button>
-            <button class="tab-btn" onclick="showTab('summary')">Ⅳ、费用汇总</button>
+        <div class="fee-toolbar">
+            <div class="search-box">
+                <input type="text" id="feeSearch" placeholder="🔍 搜费用项：监理 / 设计 / 水保 / 水资源 / 代建 …（不熟悉分类也能快速定位）" oninput="filterFees()">
+                <button id="searchClear" class="search-clear" onclick="clearSearch()" style="display:none">清除</button>
+            </div>
+            <div class="nav-hint">💡 不熟悉费用分类？直接点下方费用项跳转，或在搜索框输入关键词跨类别检索</div>
+            <div class="cat-nav" id="catNav"></div>
+            <div class="search-info" id="searchInfo" style="display:none"></div>
+        </div>
+
+        <div class="tabs" id="tabsBar">
+            <button class="tab-btn active" data-tab="investment" onclick="showTab('investment')">Ⅰ、前期咨询</button>
+            <button class="tab-btn" data-tab="design" onclick="showTab('design')">Ⅱ、勘察设计</button>
+            <button class="tab-btn" data-tab="construction" onclick="showTab('construction')">Ⅲ、建设管理</button>
+            <button class="tab-btn" data-tab="summary" onclick="showTab('summary')">Ⅳ、费用汇总</button>
         </div>
 
         <div id="investment" class="tab-content active">
@@ -471,12 +581,9 @@
                             <p>0.00 万元</p>
                         </div>
                     </div>
-                            <p>0.00 万元</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
         <div id="summary" class="tab-content">
             <div class="summary">
@@ -502,8 +609,10 @@
         function showTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            event.target.classList.add('active');
+            const tc = document.getElementById(tabId);
+            if (tc) tc.classList.add('active');
+            const btn = document.querySelector('.tab-btn[data-tab="' + tabId + '"]');
+            if (btn) btn.classList.add('active');
         }
 
         function updateSummary() {
@@ -1558,6 +1667,112 @@
             results.capital = fee;
             document.getElementById('capitalResult').innerHTML = `<h4>验资费</h4><p>${formatNum(fee)} 万元</p><div class="result-detail">${detail}</div>`;
             updateSummary();
+        }
+        /* ===== 费用分类搜索 + 二级标题导航 ===== */
+        function filterFees() {
+            const q = (document.getElementById('feeSearch').value || '').trim().toLowerCase();
+            const info = document.getElementById('searchInfo');
+            const clearBtn = document.getElementById('searchClear');
+            const tabsEl = document.getElementById('tabsBar');
+
+            if (q === '') {
+                document.body.classList.remove('searching');
+                if (tabsEl) tabsEl.style.display = '';
+                if (info) info.style.display = 'none';
+                if (clearBtn) clearBtn.style.display = 'none';
+                document.querySelectorAll('.calculator-card, .section, .tab-content')
+                    .forEach(e => e.classList.remove('fee-hidden'));
+                return;
+            }
+
+            document.body.classList.add('searching');
+            if (tabsEl) tabsEl.style.display = 'none';
+            if (clearBtn) clearBtn.style.display = '';
+            if (info) info.style.display = '';
+
+            let total = 0;
+            document.querySelectorAll('.tab-content').forEach(tc => {
+                let visibleInTab = 0;
+                tc.querySelectorAll('.calculator-card').forEach(card => {
+                    const text = card.textContent.toLowerCase();
+                    if (text.indexOf(q) !== -1) {
+                        card.classList.remove('fee-hidden');
+                        visibleInTab++;
+                        total++;
+                    } else {
+                        card.classList.add('fee-hidden');
+                    }
+                });
+                tc.querySelectorAll('.section').forEach(sec => {
+                    const hasVisible = sec.querySelector('.calculator-card:not(.fee-hidden)');
+                    if (hasVisible) sec.classList.remove('fee-hidden');
+                    else sec.classList.add('fee-hidden');
+                });
+                if (visibleInTab === 0) tc.classList.add('fee-hidden');
+                else tc.classList.remove('fee-hidden');
+            });
+
+            if (info) {
+                info.textContent = total > 0
+                    ? '🔎 找到 ' + total + ' 个匹配的费用项（已跨全部类别检索，点击上方分类按钮可恢复分页）'
+                    : '🔍 未找到匹配「' + q + '」的费用项，换个关键词试试';
+            }
+        }
+
+        function clearSearch() {
+            const input = document.getElementById('feeSearch');
+            if (input) input.value = '';
+            filterFees();
+        }
+
+        function jumpToFee(id, tab) {
+            clearSearch();
+            showTab(tab);
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                el.classList.add('fee-flash');
+                setTimeout(function () { el.classList.remove('fee-flash'); }, 1600);
+            }
+        }
+
+        function buildCatNav() {
+            const nav = document.getElementById('catNav');
+            if (!nav) return;
+            const groups = [];
+            document.querySelectorAll('.tab-content').forEach(tc => {
+                const tabId = tc.id;
+                if (tabId === 'summary') return;
+                const h2 = tc.querySelector('.section > h2');
+                const title = h2 ? h2.textContent.trim() : tabId;
+                const items = [];
+                tc.querySelectorAll('.calculator-card').forEach((card, idx) => {
+                    card.setAttribute('data-tab', tabId);
+                    const cid = 'fee-' + tabId + '-' + idx;
+                    card.id = cid;
+                    const h3 = card.querySelector('h3');
+                    items.push({ id: cid, label: h3 ? h3.textContent.trim() : ('费用项 ' + (idx + 1)) });
+                });
+                groups.push({ tab: tabId, title: title, items: items });
+            });
+
+            let html = '';
+            groups.forEach(g => {
+                html += '<div class="cat-group">';
+                html += '<div class="cat-group-title">' + g.title + '</div>';
+                html += '<div class="cat-items">';
+                g.items.forEach(it => {
+                    html += '<span class="cat-chip" onclick="jumpToFee(\'' + it.id + '\',\'' + g.tab + '\')">' + it.label + '</span>';
+                });
+                html += '</div></div>';
+            });
+            nav.innerHTML = html;
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', buildCatNav);
+        } else {
+            buildCatNav();
         }
     </script>
 </body>
